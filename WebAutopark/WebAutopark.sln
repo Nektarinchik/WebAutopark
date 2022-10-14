@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAutopark", "WebAutopark\WebAutopark.csproj", "{F152B97E-A074-44BF-B104-56BD97A21C18}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F152B97E-A074-44BF-B104-56BD97A21C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F152B97E-A074-44BF-B104-56BD97A21C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F152B97E-A074-44BF-B104-56BD97A21C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F152B97E-A074-44BF-B104-56BD97A21C18}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2DFFCF7E-3857-4EC7-A3B4-0312F1C35B17}
+	EndGlobalSection
+EndGlobal
