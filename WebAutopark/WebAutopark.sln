@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAutopark", "WebAutopark\WebAutopark.csproj", "{F152B97E-A074-44BF-B104-56BD97A21C18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAutopark", "WebAutopark\WebAutopark.csproj", "{4304BAEA-EF04-45C7-851B-926A3D5C7E20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAutopark.DAL", "WebAutopark.DAL\WebAutopark.DAL.csproj", "{5CFCDDB9-390B-4091-93F8-336EE94C5104}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F152B97E-A074-44BF-B104-56BD97A21C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F152B97E-A074-44BF-B104-56BD97A21C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F152B97E-A074-44BF-B104-56BD97A21C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F152B97E-A074-44BF-B104-56BD97A21C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4304BAEA-EF04-45C7-851B-926A3D5C7E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4304BAEA-EF04-45C7-851B-926A3D5C7E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4304BAEA-EF04-45C7-851B-926A3D5C7E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4304BAEA-EF04-45C7-851B-926A3D5C7E20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CFCDDB9-390B-4091-93F8-336EE94C5104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CFCDDB9-390B-4091-93F8-336EE94C5104}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CFCDDB9-390B-4091-93F8-336EE94C5104}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CFCDDB9-390B-4091-93F8-336EE94C5104}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {2DFFCF7E-3857-4EC7-A3B4-0312F1C35B17}
+		SolutionGuid = {5702EE07-02F4-4AF8-87FC-8E5757CEFB49}
 	EndGlobalSection
 EndGlobal
