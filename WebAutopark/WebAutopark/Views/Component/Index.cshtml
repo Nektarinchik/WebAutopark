@@ -1,0 +1,30 @@
+﻿@model IEnumerable<WebAutopark.DAL.Entities.Components>
+@{
+    ViewData["Title"] = "Components List";
+}
+
+<div class="text-center">
+    <h2 class="display-6">Components List</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+          @foreach (var component in Model)
+            {
+                <tr class="table-active">
+                  <td>@component.Name</td>
+                  <td><a href="~/Component/Delete/?componentId=@component.ComponentId">Delete</a></td>
+                  <td><a href="~/Component/Update/?componentId=@component.ComponentId">Update</a></td>
+                </tr>
+            }
+      </tbody>
+    </table>
+    <p>
+        <a href="~/Component/Create">Create New Vehicle Type</a>
+    </p>
+</div>

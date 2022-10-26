@@ -1,0 +1,20 @@
+﻿@{
+	ViewData["Title"] = "Create Component";
+}
+
+<h2 class="display-6">Complete The Form</h2>
+<form method="post">
+  <fieldset>
+    <div class="form-group">
+      <label for="Name" class="form-label mt-4">Name</label>
+      <input type="text" class="form-control" id="Name" name="Name" aria-describedby="nameHelp" placeholder="Enter Name">
+      <small id="nameHelp" class="form-text text-muted">Enter name of necessary component (e.g. cylinder head, distributor etc.)</small>
+    </div>
+    <hr size="3" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </fieldset>
+</form>
+
+<p>
+    <a href="~/Component/Index">Back To Components List</a>
+</p>
