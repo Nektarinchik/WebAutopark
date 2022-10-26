@@ -4,22 +4,27 @@
 }
 
 <div class="text-center">
-    <table>
+    <h2 class="display-6">Vehicle Types List</h2>
+    <table class="table table-hover">
+      <thead>
         <tr>
-            <td>Name</td>
-            <td>Tax coefficient</td>
-            <td></td>
-            <td></td>
+          <th scope="col">Name</th>
+          <th scope="col">Tax coefficient</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
-        @foreach (var vehicleType in Model)
-        {
-            <tr>
-                <td>@vehicleType.Name</td>
-                <td>@vehicleType.TaxCoefficient</td>
-                <td><a href="~/VehicleType/Delete/?vehicleTypeId=@vehicleType.VehicleTypeId">Delete</a></td>
-                <td><a href="~/VehicleType/Update/?vehicleTypeId=@vehicleType.VehicleTypeId">Update</a></td>
-            </tr>
-        }
+      </thead>
+      <tbody>
+          @foreach (var vehicleType in Model)
+            {
+                <tr class="table-active">
+                  <td>@vehicleType.Name</td>
+                  <td>@vehicleType.TaxCoefficient</td>
+                  <td><a href="~/VehicleType/Delete/?vehicleTypeId=@vehicleType.VehicleTypeId">Delete</a></td>
+                  <td><a href="~/VehicleType/Update/?vehicleTypeId=@vehicleType.VehicleTypeId">Update</a></td>
+                </tr>
+            }
+      </tbody>
     </table>
     <p>
         <a href="~/VehicleType/Create">Create New Vehicle Type</a>
