@@ -8,7 +8,7 @@ namespace WebAutopark.DAL.Entities
 {
     public sealed class VehicleTypes
     {
-        public int VehicleTypeId { get; private set; }
+        public int VehicleTypeId { get; set; }
         public string Name { get; set; } = null!;
         public double TaxCoefficient { get; set; }
         public VehicleTypes()
@@ -18,10 +18,6 @@ namespace WebAutopark.DAL.Entities
             VehicleTypeId = vehicleTypeId;
             Name = name;
             TaxCoefficient = taxCoefficient;
-        }
-        public void Display()
-        {
-            Console.WriteLine($"TypeName: {Name} TaxCoefficient: {TaxCoefficient}");
         }
         public override string ToString() => $"{Name}, \"{TaxCoefficient}\"";
 

@@ -5,13 +5,12 @@ using WebAutopark.DAL.Entities;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the app
-builder.Services.AddTransient<IRepository<Components>, SQLComponentsRepository>();
-builder.Services.AddTransient<IRepository<Orders>, SQLOrdersRepository>();
-builder.Services.AddTransient<IRepository<Vehicles>, SQLVehiclesRepository>();
-builder.Services.AddTransient<IRepository<VehicleTypes>, SQLVehicleTypeRepository>();
-builder.Services.AddTransient<IRepository<OrderItems>, SQLOrderItemsRepository>();
-
-// Add services to the container.
+string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddTransient<IRepository<Components>, SQLComponentsRepository>(provider => new SQLComponentsRepository(connection));
+builder.Services.AddTransient<IRepository<Orders>, SQLOrdersRepository>(provider => new SQLOrdersRepository(connection));
+builder.Services.AddTransient<IRepository<Vehicles>, SQLVehiclesRepository>(provider => new SQLVehiclesRepository(connection));
+builder.Services.AddTransient<IRepository<VehicleTypes>, SQLVehicleTypeRepository>(provider => new SQLVehicleTypeRepository(connection));
+builder.Services.AddTransient<IRepository<OrderItems>, SQLOrderItemsRepository>(provider => new SQLOrderItemsRepository(connection));
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
