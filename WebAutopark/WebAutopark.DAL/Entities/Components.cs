@@ -8,7 +8,7 @@ namespace WebAutopark.DAL.Entities
 {
     public sealed class Components
     {
-        public int ComponentId { get; private set; }
+        public int ComponentId { get; set; }
         public string Name { get; set; }
         public Components(int componentId, string name)
         {

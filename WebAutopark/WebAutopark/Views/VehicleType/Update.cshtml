@@ -1,0 +1,17 @@
+﻿@model WebAutopark.DAL.Entities.VehicleTypes;
+@{
+    ViewData["Title"] = "Update Vehicle Type";
+}
+
+<form method="post">
+    <input type="hidden" value="@Model.VehicleTypeId" name="VehicleTypeId" />
+    <label for="Name">Name</label><br>
+    <input type="text" id="Name" name="Name" value="@Model.Name"/><br>
+    <label for="TaxCoefficient">Tax Coefficient</label><br>
+    <input type="text" id="TaxCoefficient" name="TaxCoefficient" value="@Model.TaxCoefficient"><br>
+    <input type="submit" value="Submit">
+</form>
+
+<p>
+    <a href="~/VehicleType/Index">Back To Vehicle Types List</a>
+</p>

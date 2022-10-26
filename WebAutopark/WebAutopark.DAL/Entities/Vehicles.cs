@@ -8,7 +8,7 @@ namespace WebAutopark.DAL.Entities
 {
     public sealed class Vehicles : IEquatable<Vehicles>
     {
-        public int VehicleId { get; private set; }
+        public int VehicleId { get; set; }
         public int VehicleTypeId { get; private set; }
         public double Weight { get; set; }
         public string? RegistrationNumber { get; set; }

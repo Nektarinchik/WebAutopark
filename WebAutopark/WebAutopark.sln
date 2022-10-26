@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAutopark", "WebAutopark\WebAutopark.csproj", "{4304BAEA-EF04-45C7-851B-926A3D5C7E20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAutopark.DAL", "WebAutopark.DAL\WebAutopark.DAL.csproj", "{5CFCDDB9-390B-4091-93F8-336EE94C5104}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAutopark.DAL", "WebAutopark.DAL\WebAutopark.DAL.csproj", "{5CFCDDB9-390B-4091-93F8-336EE94C5104}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
