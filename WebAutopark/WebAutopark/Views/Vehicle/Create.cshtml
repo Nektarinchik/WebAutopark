@@ -1,5 +1,56 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using WebAutopark.DAL.Entities
+
+@model WebAutopark.DAL.Entities.Vehicles;
+
 @{
+    ViewData["Title"] = "Create Vehicle";
 }
+
+<h2 class="display-6">Complete The Form</h2>
+<form asp-controller="Vehicle" asp-action="Create" method="post">
+  <fieldset>
+    <div class="form-group">
+      <label asp-for="VehicleTypeId" class="form-label mt-4">Vehicle Type</label><br />
+      <select asp-for="VehicleTypeId" asp-items="@ViewBag.CreateViewModel.VehicleTypeModels">
+      </select>
+    </div>
+    <div class="form-group">
+      <label asp-for="Model" class="form-label mt-4">Model</label>
+      <input asp-for="Model" type="text" class="form-control" aria-describedby="modelHelp" placeholder="Enter Model Name" />
+      <small id="modelHelp" class="form-text text-muted">Enter model name (e.g. Mercedes W211, BMW e60 etc.)</small>
+    </div>
+    <div class="form-group">
+      <label asp-for="RegistrationNumber" class="form-label mt-4">Registration Number</label>
+      <input asp-for="RegistrationNumber" type="text" class="form-control" aria-describedby="registrationNumberHelp" placeholder="Enter Registration number" />
+      <small id="registrationNumberHelp" class="form-text text-muted">Enter registration number (e.g. 6582 EP-2 etc.)</small>
+    </div>
+    <div class="form-group">
+      <label asp-for="Weight" class="form-label mt-4">Weight</label>
+      <input asp-for="Weight" type="text" class="form-control" placeholder="Enter Weight" />
+    </div>
+    <div class="form-group">
+      <label asp-for="Year" class="form-label mt-4">Year</label>
+      <input asp-for="Year" class="form-control" aria-describedby="yearHelp" placeholder="Enter Year" />
+      <small id="registrationNumberHelp" class="form-text text-muted">Enter year of manufacture of the car</small>
+    </div>
+    <div class="form-group">
+      <label asp-for="Mileage" class="form-label mt-4">Mileage</label>
+      <input asp-for="Mileage" type="text" class="form-control" placeholder="Enter Mileage" />
+    </div>
+    <div class="form-group">
+      <label asp-for="Color" class="form-label mt-4">Color</label><br />
+      <select asp-for="Color" asp-items="@Html.GetEnumSelectList<Colors>()">
+      </select>
+    </div>
+    <div class="form-group">
+      <label asp-for="FuelConsumption" class="form-label mt-4">Fuel Consumption</label>
+      <input asp-for="FuelConsumption" type="text" class="form-control" placeholder="Enter Fuel Consumption" />
+    </div>
+    <hr size="3" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </fieldset>
+</form>
+
+<p>
+    <a asp-controller="Vehicle" asp-action="Index">Back To Vehicle List</a>
+</p>

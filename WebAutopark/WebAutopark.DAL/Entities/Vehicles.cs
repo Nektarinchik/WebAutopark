@@ -13,7 +13,7 @@ namespace WebAutopark.DAL.Entities
         public double Weight { get; set; }
         public string? RegistrationNumber { get; set; }
         public string Model { get; set; } = null!;
-        public int Year { get; }
+        public int Year { get; set; }
         public double Mileage { get; set; }
         public Colors Color { get; set; }
         public double FuelConsumption { get; set; }
