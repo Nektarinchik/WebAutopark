@@ -66,5 +66,40 @@ namespace WebAutopark.Controllers
             await _vehiclesRepository.Delete(vehicleId.Value);
             return Redirect("~/Vehicle/Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int? vehicleId)
+        {
+            if (!vehicleId.HasValue)
+            {
+                return Redirect("~/Vehicle/Index");
+            }
+            IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result
+                .Select(vt => new VehicleTypeModel
+                {
+                    Name = vt.Name,
+                    VehicleTypeId = vt.VehicleTypeId
+                })
+                .ToList();
+            CreateViewModel cvm = new CreateViewModel();
+            foreach (var vehicleTypeModel in vehicleTypeModels)
+            {
+                cvm.VehicleTypeModels.Add(new SelectListItem
+                {
+                    Value = vehicleTypeModel.VehicleTypeId.ToString(),
+                    Text = vehicleTypeModel.Name
+                });
+            }
+            ViewBag.CreateViewModel = cvm;
+            return View(await _vehiclesRepository.Get(vehicleId.Value));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(Vehicles vehicle)
+        {
+            await _vehiclesRepository.Update(vehicle);
+            return Redirect("~/Vehicle/Index");
+        }
+        
     }
 }
