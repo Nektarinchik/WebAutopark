@@ -17,6 +17,7 @@ namespace WebAutopark.DAL.Entities
         public double Mileage { get; set; }
         public Colors Color { get; set; }
         public double FuelConsumption { get; set; }
+        public int Volume { get; set; }
         public Vehicles()
         { }
         public Vehicles(int vehicleId, int vehicleTypeId, string model,

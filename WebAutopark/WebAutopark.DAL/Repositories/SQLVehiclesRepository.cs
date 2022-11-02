@@ -20,8 +20,8 @@ namespace WebAutopark.DAL.Repositories
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 string sqlQuery = "INSERT INTO Vehicles " +
-                    "(VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, Color, FuelConsumption) " +
-                    "VALUES(@VehicleTypeId, @Model, @RegistrationNumber, @Weight, @Year, @Mileage, @Color, @FuelConsumption)";
+                    "(VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, Color, FuelConsumption, Volume) " +
+                    "VALUES(@VehicleTypeId, @Model, @RegistrationNumber, @Weight, @Year, @Mileage, @Color, @FuelConsumption, @Volume)";
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }
@@ -56,7 +56,7 @@ namespace WebAutopark.DAL.Repositories
             {
                 string sqlQuery = "UPDATE Vehicles " +
                     "SET VehicleTypeId = @VehicleTypeId, Model = @Model, RegistrationNumber = @RegistrationNumber, " +
-                    "Weight = @Weight, Year = @Year, Color = @Color, Mileage = @Mileage, FuelConsumption = @FuelConsumption " +
+                    "Weight = @Weight, Year = @Year, Color = @Color, Mileage = @Mileage, FuelConsumption = @FuelConsumption, Volume = @Volume " +
                     "WHERE VehicleId = @VehicleId";
                 await db.ExecuteAsync(sqlQuery, item);
             }

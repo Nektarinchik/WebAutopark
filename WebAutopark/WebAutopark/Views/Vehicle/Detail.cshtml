@@ -1,4 +1,4 @@
-﻿@model WebAutopark.ViewModels.Vehicle.DetailViewModel
+﻿@model WebAutopark.ViewModels.Vehicle.VehicleDetailViewModel
 
 @{
     ViewData["Title"] = "Vehicle Overview";
@@ -22,34 +22,38 @@
             </tr>
             <tr class="table-active">
                 <td>Model</td>
-                <td>@Model.Vehicle.Model</td>
+                <td>@Model.Model</td>
             </tr>
             <tr class="table-active">
                 <td>Registration Number</td>
-                <td>@Model.Vehicle.RegistrationNumber</td>
+                <td>@Model.RegistrationNumber</td>
             </tr>
             <tr class="table-active">
                 <td>Weight</td>
-                <td>@Model.Vehicle.Weight</td>
+                <td>@Model.Weight</td>
             </tr>
             <tr class="table-active">
                 <td>Year</td>
-                <td>@Model.Vehicle.Year</td>
+                <td>@Model.Year</td>
             </tr>
             <tr class="table-active">
                 <td>Mileage</td>
-                <td>@Model.Vehicle.Mileage</td>
+                <td>@Model.Mileage</td>
             </tr>
             <tr class="table-active">
                 <td>Color</td>
-                <td>@Model.Vehicle.Color.ToString()</td>
+                <td>@Model.Color.ToString()</td>
             </tr>
             <tr class="table-active">
                 <td>Fuel Consumption</td>
-                <td>@Model.Vehicle.FuelConsumption</td>
+                <td>@Model.FuelConsumption</td>
+            </tr>
+            <tr class="table-active">
+                <td>Volume</td>
+                <td>@Model.Volume</td>
             </tr>
             <tr>
-                <td colspan="2"><a asp-controller="Vehicle" asp-action="Update" asp-route-vehicleId="@Model.Vehicle.VehicleId">Update</a></td>
+                <td colspan="2"><a asp-controller="Vehicle" asp-action="Update" asp-route-vehicleId="@Model.VehicleId">Update</a></td>
             </tr>
           </tbody>
       </thead>

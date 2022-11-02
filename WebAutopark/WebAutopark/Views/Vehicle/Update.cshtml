@@ -47,6 +47,10 @@
       <label asp-for="FuelConsumption" class="form-label mt-4">Fuel Consumption</label>
       <input asp-for="FuelConsumption" type="text" value="@Model.FuelConsumption" class="form-control" placeholder="Enter Fuel Consumption" />
     </div>
+    <div class="form-group">
+      <label asp-for="Volume" class="form-label mt-4">Volume</label>
+      <input asp-for="Volume" value="@Model.Volume" class="form-control" placeholder="Enter Volume" />
+    </div>
     <hr size="3" />
     <button type="submit" class="btn btn-primary">Submit</button>
   </fieldset>
