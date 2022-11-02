@@ -1,0 +1,60 @@
+﻿@model WebAutopark.ViewModels.Vehicle.DetailViewModel
+
+@{
+    ViewData["Title"] = "Vehicle Overview";
+}
+
+<div class="text-center">
+    <h2 class="display-6">Vehicles List</h2>
+    <table class="table table-hover">
+      <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Value</th>
+          </tr>
+          <tbody>
+            <tr class="table-active">
+                <td>Vehicle Type</td>
+                <td>
+                    Name: @Model.VehicleType.Name<br />
+                    Tax Coefficient: @Model.VehicleType.TaxCoefficient.ToString()
+                </td>
+            </tr>
+            <tr class="table-active">
+                <td>Model</td>
+                <td>@Model.Vehicle.Model</td>
+            </tr>
+            <tr class="table-active">
+                <td>Registration Number</td>
+                <td>@Model.Vehicle.RegistrationNumber</td>
+            </tr>
+            <tr class="table-active">
+                <td>Weight</td>
+                <td>@Model.Vehicle.Weight</td>
+            </tr>
+            <tr class="table-active">
+                <td>Year</td>
+                <td>@Model.Vehicle.Year</td>
+            </tr>
+            <tr class="table-active">
+                <td>Mileage</td>
+                <td>@Model.Vehicle.Mileage</td>
+            </tr>
+            <tr class="table-active">
+                <td>Color</td>
+                <td>@Model.Vehicle.Color.ToString()</td>
+            </tr>
+            <tr class="table-active">
+                <td>Fuel Consumption</td>
+                <td>@Model.Vehicle.FuelConsumption</td>
+            </tr>
+            <tr>
+                <td colspan="2"><a asp-controller="Vehicle" asp-action="Update" asp-route-vehicleId="@Model.Vehicle.VehicleId">Update</a></td>
+            </tr>
+          </tbody>
+      </thead>
+    </table>
+    <p>
+        <a asp-controller="Vehicle" asp-action="Index">Back To Vehicle List</a>
+    </p>
+</div>

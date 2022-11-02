@@ -100,6 +100,24 @@ namespace WebAutopark.Controllers
             await _vehiclesRepository.Update(vehicle);
             return Redirect("~/Vehicle/Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(int? vehicleId)
+        {
+            if (!vehicleId.HasValue)
+            {
+                return Redirect("~/Vehicle/Index");
+            }
+
+            Vehicles vehicle = await _vehiclesRepository.Get(vehicleId.Value);
+            DetailViewModel dvm = new DetailViewModel
+            {
+                Vehicle = vehicle,
+                VehicleType = await _vehicleTypesRepository.Get(vehicle.VehicleTypeId)
+            };
+
+            return View(dvm);
+        }
         
     }
 }
