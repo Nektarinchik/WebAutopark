@@ -1,60 +1,60 @@
 ﻿@using WebAutopark.DAL.Entities
 
-@model WebAutopark.DAL.Entities.Vehicles;
+@model WebAutopark.DAL.Entities.Vehicles
 
 @{
-    ViewData["Title"] = "Create Vehicle";
+    ViewData["Title"] = "Update Vehicle";
 }
 
 <h2 class="display-6">Complete The Form</h2>
-<form asp-controller="Vehicle" asp-action="Create" method="post">
+<form asp-controller="Vehicle" asp-action="Update" method="post">
+  <input asp-for="VehicleId" type="hidden" value="@Model.VehicleId" />
   <fieldset>
     <div class="form-group">
       <label asp-for="VehicleTypeId" class="form-label mt-4">Vehicle Type</label><br />
-      <select asp-for="VehicleTypeId" asp-items="@ViewBag.CreateViewModel.VehicleTypeModels">
+      <select asp-for="VehicleTypeId" asp-items="@ViewBag.CreateViewModel.VehicleTypeModels" value="@Model.VehicleTypeId">
       </select>
     </div>
     <div class="form-group">
       <label asp-for="Model" class="form-label mt-4">Model</label>
-      <input asp-for="Model" type="text" class="form-control" aria-describedby="modelHelp" placeholder="Enter Model Name" />
+      <input asp-for="Model" type="text" value="@Model.Model" class="form-control" aria-describedby="modelHelp" placeholder="Enter Model Name" />
       <small id="modelHelp" class="form-text text-muted">Enter model name (e.g. Mercedes W211, BMW e60 etc.)</small>
     </div>
     <div class="form-group">
       <label asp-for="RegistrationNumber" class="form-label mt-4">Registration Number</label>
-      <input asp-for="RegistrationNumber" type="text" class="form-control" aria-describedby="registrationNumberHelp" placeholder="Enter Registration number" />
+      <input asp-for="RegistrationNumber" type="text" value="@Model.RegistrationNumber" class="form-control" aria-describedby="registrationNumberHelp" placeholder="Enter Registration number" />
       <small id="registrationNumberHelp" class="form-text text-muted">Enter registration number (e.g. 6582 EP-2 etc.)</small>
     </div>
     <div class="form-group">
       <label asp-for="Weight" class="form-label mt-4">Weight</label>
-      <input asp-for="Weight" type="text" class="form-control" placeholder="Enter Weight" />
+      <input asp-for="Weight" type="text" value="@Model.Weight" class="form-control" placeholder="Enter Weight" />
     </div>
     <div class="form-group">
       <label asp-for="Year" class="form-label mt-4">Year</label>
-      <input asp-for="Year" class="form-control" aria-describedby="yearHelp" placeholder="Enter Year" />
+      <input asp-for="Year" value="@Model.Year" class="form-control" aria-describedby="yearHelp" placeholder="Enter Year" />
       <small id="registrationNumberHelp" class="form-text text-muted">Enter year of manufacture of the car</small>
     </div>
     <div class="form-group">
       <label asp-for="Mileage" class="form-label mt-4">Mileage</label>
-      <input asp-for="Mileage" type="text" class="form-control" placeholder="Enter Mileage" />
+      <input asp-for="Mileage" type="text" value="@Model.Mileage" class="form-control" placeholder="Enter Mileage" />
     </div>
     <div class="form-group">
       <label asp-for="Color" class="form-label mt-4">Color</label><br />
-      <select asp-for="Color" asp-items="@Html.GetEnumSelectList<Colors>()">
+      <select asp-for="Color" asp-items="@Html.GetEnumSelectList<Colors>()" value="@Model.Color">
       </select>
     </div>
     <div class="form-group">
       <label asp-for="FuelConsumption" class="form-label mt-4">Fuel Consumption</label>
-      <input asp-for="FuelConsumption" type="text" class="form-control" placeholder="Enter Fuel Consumption" />
+      <input asp-for="FuelConsumption" type="text" value="@Model.FuelConsumption" class="form-control" placeholder="Enter Fuel Consumption" />
     </div>
     <div class="form-group">
       <label asp-for="Volume" class="form-label mt-4">Volume</label>
-      <input asp-for="Volume" class="form-control" placeholder="Enter Volume Of Tank" />
+      <input asp-for="Volume" value="@Model.Volume" class="form-control" placeholder="Enter Volume" />
     </div>
     <hr size="3" />
     <button type="submit" class="btn btn-primary">Submit</button>
   </fieldset>
 </form>
-
 <p>
-    <a asp-controller="Vehicle" asp-action="Index">Back To Vehicle List</a>
+    <a href="~/VehicleType/Index">Back To Vehicle Types List</a>
 </p>

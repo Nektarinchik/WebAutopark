@@ -9,9 +9,6 @@ namespace WebAutopark.DAL.Entities
 {
     public enum Colors
     {
-        [Description("Default")]
-        DEFAULT,
-
         [Description("Blue")]
         BLUE,
 
