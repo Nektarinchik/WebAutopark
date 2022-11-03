@@ -29,8 +29,6 @@ namespace WebAutopark.Controllers
             _ordersRepository = orders;
             _ordersItemsRepository = ordersItems;
         }
-
-        // check this controller if you replace depency on service IRepository<OrderItems>
         public async Task<IActionResult> Index()
         {
             IEnumerable<Orders> orders = await _ordersRepository.GetAll();
@@ -113,14 +111,34 @@ namespace WebAutopark.Controllers
             return Redirect("~/Order/Index");
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Detail(int? orderId)
-        //{
-        //    if (!orderId.HasValue)
-        //    {
-        //        return Redirect("~/Order/Index");
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> Detail(int? orderId)
+        {
+            if (!orderId.HasValue)
+            {
+                return Redirect("~/Order/Index");
+            }
 
-        //}
+            var order = await _ordersRepository.Get(orderId.Value);
+            var vehicle = await _vehiclesRepository.Get(order.VehicleId);
+            var orderItem = _ordersItemsRepository.GetAll().Result
+                .Select(oi => oi)
+                .Where(oi => oi.OrderId == orderId)
+                .FirstOrDefault();
+            DetailViewModel dvm = new DetailViewModel
+            {
+                Vehicle = new VehicleViewModel
+                {
+                    VehicleId = vehicle.VehicleId,
+                    Model = vehicle.Model,
+                    RegistrationNumber = vehicle.RegistrationNumber
+                },
+                Component = await _componentsRepository.Get(orderItem.ComponentId),
+                Date = order.Date,
+                Quantity = orderItem.Quantity
+            };
+
+            return View(dvm);
+        }
     }
 }
