@@ -40,10 +40,10 @@ namespace WebAutopark.Controllers
             foreach (var order in orders)
             {
                 vehicle = await _vehiclesRepository.Get(order.VehicleId);
-                if (_ordersItemsRepository is SQLOrderItemsRepository ordersItemsSQLRep)
-                {
-                    orderItem = await ordersItemsSQLRep.GetInstanceByOrderId(order.OrderId);
-                }
+                orderItem = _ordersItemsRepository.GetAll().Result
+                    .Select(o => o)
+                    .Where(o => o.OrderId == order.OrderId)
+                    .FirstOrDefault();
 
                 IndexViewModel oivm = new IndexViewModel
                 {
@@ -112,5 +112,15 @@ namespace WebAutopark.Controllers
 
             return Redirect("~/Order/Index");
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> Detail(int? orderId)
+        //{
+        //    if (!orderId.HasValue)
+        //    {
+        //        return Redirect("~/Order/Index");
+        //    }
+
+        //}
     }
 }

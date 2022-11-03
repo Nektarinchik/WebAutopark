@@ -61,14 +61,5 @@ namespace WebAutopark.DAL.Repositories
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }
-
-        public async Task<OrderItems> GetInstanceByOrderId(int orderId)
-        {
-            using (IDbConnection db = new SqlConnection(_connectionString))
-            {
-                return await db.QueryFirstAsync<OrderItems>("SELECT * FROM OrderItems WHERE OrderId = @OrderId",
-                    new { OrderId = orderId });
-            }
-        }
     }
 }
