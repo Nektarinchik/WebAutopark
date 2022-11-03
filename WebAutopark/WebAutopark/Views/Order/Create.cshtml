@@ -1,0 +1,38 @@
+﻿@using WebAutopark.ViewModels.Order
+
+@model CreatePostViewModel
+
+@{
+    ViewData["Title"] = "Create Order";
+    CreateGetViewModel cvm = ViewBag.CreateViewModel;
+}
+
+<h2 class="display-6">Complete The Form</h2>
+<form asp-controller="Order" asp-action="Create" method="post">
+  <fieldset>
+    <div class="form-group">
+      <label asp-for="VehicleId" class="form-label mt-4">Vehicle</label><br />
+      <select asp-for="VehicleId" asp-items="@cvm.Vehicles">
+      </select>
+    </div>
+    <div class="form-group">
+      <label asp-for="ComponentId" class="form-label mt-4">Component</label><br />
+      <select asp-for="ComponentId" asp-items="@cvm.Components">
+      </select>
+    </div>
+    <div class="form-group">
+      <label asp-for="Quantity" class="form-label mt-4">Quantity</label>
+      <input asp-for="Quantity" class="form-control" placeholder="Enter Quantity of Components" />
+    </div>
+    <div class="form-group">
+      <label asp-for="Date" class="form-label mt-4">Date</label>
+      <input asp-for="Date" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" />
+    </div>
+    <hr size="3" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </fieldset>
+</form>
+
+<p>
+    <a asp-controller="Order" asp-action="Index">Back To Orders List</a>
+</p>

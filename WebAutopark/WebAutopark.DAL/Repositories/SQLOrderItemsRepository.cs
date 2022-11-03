@@ -18,7 +18,7 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "INSERT INTO Components " +
+                string sqlQuery = "INSERT INTO OrderItems " +
                     "(OrderId, ComponentId, Quantity) " +
                     "VALUES(@OrderId, @ComponentId, @Quantity)";
                 await db.ExecuteAsync(sqlQuery, item);

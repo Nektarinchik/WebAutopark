@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAutopark.DAL.Entities;
 using WebAutopark.DAL.Interfaces;
 using WebAutopark.DAL.Repositories;
@@ -33,7 +34,7 @@ namespace WebAutopark.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Orders> orders = await _ordersRepository.GetAll();
-            List<OrderIndexViewModel> viewOrders = new List<OrderIndexViewModel>();
+            List<IndexViewModel> viewOrders = new List<IndexViewModel>();
             Vehicles? vehicle = null;
             OrderItems? orderItem = new OrderItems();
             foreach (var order in orders)
@@ -44,11 +45,11 @@ namespace WebAutopark.Controllers
                     orderItem = await ordersItemsSQLRep.GetInstanceByOrderId(order.OrderId);
                 }
 
-                OrderIndexViewModel oivm = new OrderIndexViewModel
+                IndexViewModel oivm = new IndexViewModel
                 {
                     OrderId = order.OrderId,
                     Date = order.Date,
-                    Vehicle = new VehicleIndexViewModel
+                    Vehicle = new VehicleViewModel
                     {
                         VehicleId = vehicle.VehicleId,
                         RegistrationNumber = vehicle.RegistrationNumber,
@@ -61,6 +62,55 @@ namespace WebAutopark.Controllers
             }
 
             return View(viewOrders);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            CreateGetViewModel cvm = new CreateGetViewModel();
+            IEnumerable <Vehicles> vehicles = await _vehiclesRepository.GetAll();
+            foreach (var vehicle in vehicles)
+            {
+                cvm.Vehicles.Add(new SelectListItem
+                {
+                    Value = vehicle.VehicleId.ToString(),
+                    Text = $"Name: {vehicle.Model}\nRegistration Number: {vehicle.RegistrationNumber}"
+                });
+            }
+
+            IEnumerable<Components> components = await _componentsRepository.GetAll();
+            foreach (var component in components)
+            {
+                cvm.Components.Add(new SelectListItem
+                {
+                    Value = component.ComponentId.ToString(),
+                    Text = component.Name
+                });
+            }
+
+            ViewBag.CreateViewModel = cvm;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreatePostViewModel cpvm)
+        {
+            Orders order = new Orders
+            {
+                VehicleId = cpvm.VehicleId,
+                Date = cpvm.Date
+            };
+            _ = _ordersRepository.Create(order);
+
+            OrderItems orderItem = new OrderItems
+            {
+                OrderId = order.OrderId,
+                ComponentId = cpvm.ComponentId,
+                Quantity = cpvm.Quantity
+            };
+            await _ordersItemsRepository.Create(orderItem);
+
+            return Redirect("~/Order/Index");
         }
     }
 }
