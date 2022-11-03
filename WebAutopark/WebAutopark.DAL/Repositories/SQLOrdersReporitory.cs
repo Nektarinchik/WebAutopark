@@ -48,7 +48,7 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                return await db.QueryAsync<Orders>("SELECT * FROM Components");
+                return await db.QueryAsync<Orders>("SELECT * FROM Orders");
             }
         }
 

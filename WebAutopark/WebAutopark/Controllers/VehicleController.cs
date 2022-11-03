@@ -110,17 +110,6 @@ namespace WebAutopark.Controllers
             }
 
             Vehicles vehicle = await _vehiclesRepository.Get(vehicleId.Value);
-            //            public int VehicleId { get; set; }
-            //public int VehicleTypeId { get; set; }
-            //public double Weight { get; set; }
-            //public string? RegistrationNumber { get; set; }
-            //public string Model { get; set; } = null!;
-            //public int Year { get; set; }
-            //public double Mileage { get; set; }
-            //public Colors Color { get; set; }
-            //public double FuelConsumption { get; set; }
-            //public VehicleTypes VehicleType { get; set; } = null!;
-            //public int Volume { get; set; }
             VehicleDetailViewModel vehicleDetailViewModel = new VehicleDetailViewModel
             {
                 VehicleId = vehicle.VehicleId,
@@ -134,11 +123,6 @@ namespace WebAutopark.Controllers
                 Volume = vehicle.Volume,
                 VehicleType = await _vehicleTypesRepository.Get(vehicle.VehicleTypeId)
             };
-            //DetailViewModel dvm = new DetailViewModel
-            //{
-            //    Vehicle = vehicle,
-            //    VehicleType = await _vehicleTypesRepository.Get(vehicle.VehicleTypeId)
-            //};
 
             return View(vehicleDetailViewModel);
         }
