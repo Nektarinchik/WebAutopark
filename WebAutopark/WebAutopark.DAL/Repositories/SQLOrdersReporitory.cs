@@ -21,8 +21,8 @@ namespace WebAutopark.DAL.Repositories
             {
                 string sqlQuery = "INSERT INTO Orders " +
                     "(VehicleId, Date) " +
-                    "VALUES(@VehicleId, @Date)";
-                await db.ExecuteAsync(sqlQuery, item);
+                    "VALUES(@VehicleId, @Date); SELECT CAST(SCOPE_IDENTITY() as int)";
+                item.OrderId = db.QueryAsync<int>(sqlQuery, item).Result.FirstOrDefault();
             }
         }
 
@@ -48,7 +48,7 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                return await db.QueryAsync<Orders>("SELECT * FROM Components");
+                return await db.QueryAsync<Orders>("SELECT * FROM Orders");
             }
         }
 

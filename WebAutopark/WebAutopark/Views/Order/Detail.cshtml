@@ -1,0 +1,44 @@
+﻿@using WebAutopark.ViewModels.Order
+
+@model DetailViewModel
+
+@{
+    ViewData["Title"] = "Order Overview";
+}
+
+<div class="text-center">
+    <h2 class="display-6">Order Overview</h2>
+    <table class="table table-hover">
+      <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Value</th>
+          </tr>
+          <tbody>
+            <tr class="table-active">
+                <td>Vehicle</td>
+                <td>
+                    Name: @Model.Vehicle.Model<br />
+                    Registration Number: @Model.Vehicle.RegistrationNumber<br />
+                    <a asp-controller="Vehicle" asp-action="Detail" asp-route-vehicleId="@Model.Vehicle.VehicleId">Detail</a>
+                </td>
+            </tr>
+            <tr class="table-active">
+                <td>Component</td>
+                <td>@Model.Component.Name</td>
+            </tr>
+            <tr class="table-active">
+                <td>Quantity Of Components</td>
+                <td>@Model.Quantity.ToString()</td>
+            </tr>
+            <tr class="table-active">
+                <td>Date</td>
+                <td>@Model.Date.ToLongDateString()</td>
+            </tr>
+          </tbody>
+      </thead>
+    </table>
+    <p>
+        <a asp-controller="Order" asp-action="Index">Back To Order List</a>
+    </p>
+</div>

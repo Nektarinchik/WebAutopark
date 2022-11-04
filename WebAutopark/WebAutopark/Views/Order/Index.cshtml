@@ -1,0 +1,40 @@
+﻿@using WebAutopark.ViewModels.Order
+
+@model IEnumerable<IndexViewModel>
+
+@{
+    ViewData["Title"] = "Orders Overview";
+}
+
+<div class="text-center">
+    <h2 class="display-6">Order List</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Vehicle</th>
+          <th scope="col">Component</th>
+          <th scope="col">Quantity Of Components</th>
+          <th scope="col">Date</th>   
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+          @foreach (var order in Model)
+            {
+                <tr class="table-active">
+                  <td>
+                    Name: @order.Vehicle.Model<br />
+                    Registration Number: @order.Vehicle.RegistrationNumber
+                  </td>
+                  <td>@order.Component.Name</td>
+                  <td>@order.Quantity</td>
+                  <td>@order.Date.ToLongDateString()</td>
+                  <td><a asp-controller="Order" asp-action="Detail" asp-route-orderId="@order.OrderId">Detail</a></td>
+                </tr>
+            }
+      </tbody>
+    </table>
+    <p>
+        <a asp-controller="Order" asp-action="Create">Create New Order</a>
+    </p>
+</div>
