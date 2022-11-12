@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAutopark.DAL.Interfaces;
 using WebAutopark.DAL.Entities;
 using WebAutopark.ViewModels.Vehicle;
+using WebAutopark.DAL.Repositories;
 
 namespace WebAutopark.Controllers
 {
@@ -16,12 +17,31 @@ namespace WebAutopark.Controllers
             _vehiclesRepository = vehiclesRepository;
             _vehicleTypesRepository = vehicleTypesRepository;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(SortState state = SortState.DEFAULT)
         {
             IndexViewModel ivm = new IndexViewModel { 
                 VehicleTypes = await _vehicleTypesRepository.GetAll(), 
                 Vehicles = await _vehiclesRepository.GetAll() 
             };
+
+            if (_vehiclesRepository is SQLVehiclesRepository vehicles)
+            {
+                switch (state)
+                {
+                    case SortState.MODEL:
+                        ivm.Vehicles = await vehicles.GetSortedByModel();
+                        break;
+                    case SortState.VEHICLETYPE:
+                        ivm.Vehicles = await vehicles.GetSortedByVehicleType();
+                        break;
+                    case SortState.MILEAGE:
+                        ivm.Vehicles = await vehicles.GetSortedByMileage();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
             return View(ivm);
         }
 
@@ -125,6 +145,33 @@ namespace WebAutopark.Controllers
             };
 
             return View(vehicleDetailViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VehicleSort(SortState state = SortState.DEFAULT)
+        {
+            IndexViewModel ivm = new IndexViewModel
+            {
+                VehicleTypes = await _vehicleTypesRepository.GetAll(),
+                Vehicles = await _vehiclesRepository.GetAll()
+            };
+            switch (state)
+            {
+                case SortState.DEFAULT:
+                    break;
+                case SortState.MODEL:
+                    ivm.Vehicles.ToList().Sort();
+                    break;
+                case SortState.VEHICLETYPE:
+                    ivm.Vehicles.ToList().Reverse();
+                    break;
+                case SortState.MILEAGE:
+                    ivm.Vehicles.ToList().Sort();
+                    break;
+                default:
+                    break;
+            }
+            return PartialView(ivm);
         }
         
     }

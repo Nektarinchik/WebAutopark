@@ -12,7 +12,7 @@
   <fieldset>
     <div class="form-group">
       <label asp-for="VehicleTypeId" class="form-label mt-4">Vehicle Type</label><br />
-      <select asp-for="VehicleTypeId" asp-items="@ViewBag.CreateViewModel.VehicleTypeModels" value="@Model.VehicleTypeId">
+      <select asp-for="VehicleTypeId" class="form-select" asp-items="@ViewBag.CreateViewModel.VehicleTypeModels" value="@Model.VehicleTypeId">
       </select>
     </div>
     <div class="form-group">
@@ -40,7 +40,7 @@
     </div>
     <div class="form-group">
       <label asp-for="Color" class="form-label mt-4">Color</label><br />
-      <select asp-for="Color" asp-items="@Html.GetEnumSelectList<Colors>()" value="@Model.Color">
+      <select asp-for="Color" class="form-select" asp-items="@Html.GetEnumSelectList<Colors>()" value="@Model.Color">
       </select>
     </div>
     <div class="form-group">

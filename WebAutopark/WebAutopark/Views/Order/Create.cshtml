@@ -12,12 +12,12 @@
   <fieldset>
     <div class="form-group">
       <label asp-for="VehicleId" class="form-label mt-4">Vehicle</label><br />
-      <select asp-for="VehicleId" asp-items="@cvm.Vehicles">
+      <select asp-for="VehicleId" class="form-select" asp-items="@cvm.Vehicles">
       </select>
     </div>
     <div class="form-group">
       <label asp-for="ComponentId" class="form-label mt-4">Component</label><br />
-      <select asp-for="ComponentId" asp-items="@cvm.Components">
+      <select asp-for="ComponentId" class="form-select" asp-items="@cvm.Components">
       </select>
     </div>
     <div class="form-group">

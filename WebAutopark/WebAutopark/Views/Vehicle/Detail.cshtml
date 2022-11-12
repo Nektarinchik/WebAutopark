@@ -52,6 +52,14 @@
                 <td>Volume</td>
                 <td>@Model.Volume</td>
             </tr>
+            <tr class="table-active">
+                <td>Tax</td>
+                <td>@Model.GetCalcTaxPerMonth()</td>
+            </tr>
+            <tr class="table-active">
+                <td>Power Reserve</td>
+                <td>@Model.GetMaxKilometers()</td>
+            </tr>
             <tr>
                 <td colspan="2"><a asp-controller="Vehicle" asp-action="Update" asp-route-vehicleId="@Model.VehicleId">Update</a></td>
             </tr>
