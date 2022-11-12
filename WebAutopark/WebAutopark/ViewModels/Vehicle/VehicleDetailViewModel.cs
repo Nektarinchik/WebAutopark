@@ -25,7 +25,7 @@ namespace WebAutopark.ViewModels.Vehicle
                 return 0.0;
             }
 
-            return Volume / FuelConsumption;
+            return (Volume / FuelConsumption) * 100.0;
         }
 
     }
