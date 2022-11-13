@@ -27,8 +27,14 @@ namespace WebAutopark.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(VehicleTypes vehicleType)
         {
-            await _vehicleTypesRepository.Create(vehicleType);
-            return Redirect("~/VehicleType/Index");
+            if (ModelState.IsValid)
+            {
+                await _vehicleTypesRepository.Create(vehicleType);
+                return Redirect("~/VehicleType/Index");
+            }
+
+            return View(vehicleType);
+
         }
 
         [HttpGet]
@@ -55,8 +61,13 @@ namespace WebAutopark.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(VehicleTypes vehicleType)
         {
-            await _vehicleTypesRepository.Update(vehicleType);
-            return Redirect("~/VehicleType/Index");
+            if (ModelState.IsValid)
+            {
+                await _vehicleTypesRepository.Update(vehicleType);
+                return Redirect("~/VehicleType/Index");
+            }
+
+            return View(vehicleType);
         }
     }
 }
