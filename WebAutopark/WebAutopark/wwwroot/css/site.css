@@ -20,3 +20,7 @@ body {
 .footer-container {
     text-align: center;
 }
+
+span.field-validation-error {
+    color: red;
+}

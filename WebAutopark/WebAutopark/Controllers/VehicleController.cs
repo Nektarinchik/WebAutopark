@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 using WebAutopark.DAL.Interfaces;
 using WebAutopark.DAL.Entities;
 using WebAutopark.ViewModels.Vehicle;
@@ -48,22 +48,22 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result
-                .Select(vt => new VehicleTypeModel
-                {
-                    Name = vt.Name,
-                    VehicleTypeId = vt.VehicleTypeId
-                })
-                .ToList();
-            CreateViewModel cvm = new CreateViewModel();
-            foreach (var vehicleTypeModel in vehicleTypeModels)
-            {
-                cvm.VehicleTypeModels.Add(new SelectListItem
-                {
-                    Value = vehicleTypeModel.VehicleTypeId.ToString(),
-                    Text = vehicleTypeModel.Name
-                });
-            }
+            //IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result
+            //    .Select(vt => new VehicleTypeModel
+            //    {
+            //        Name = vt.Name,
+            //        VehicleTypeId = vt.VehicleTypeId
+            //    })
+            //    .ToList();
+            CreateViewModel cvm = new CreateViewModel(_vehicleTypesRepository);
+            //foreach (var vehicleTypeModel in vehicleTypeModels)
+            //{
+            //    cvm.VehicleTypeModels.Add(new SelectListItem
+            //    {
+            //        Value = vehicleTypeModel.VehicleTypeId.ToString(),
+            //        Text = vehicleTypeModel.Name
+            //    });
+            //}
             ViewBag.CreateViewModel = cvm;
             return View();
         }
@@ -71,8 +71,44 @@ namespace WebAutopark.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Vehicles vehicle)
         {
-            await _vehiclesRepository.Create(vehicle);
-            return Redirect("~/Vehicle/Index");
+            if (ModelState.IsValid)
+            {
+                await _vehiclesRepository.Create(vehicle);
+                return Redirect("~/Vehicle/Index");
+            }
+            else
+            {
+                string? rawFuelConsumption = ModelState?["FuelConsumption"]?.RawValue?.ToString();
+                string? rawWeight = ModelState?["Weight"]?.RawValue?.ToString();
+                string? rawMileage = ModelState?["Mileage"]?.RawValue?.ToString();
+
+                if (!string.IsNullOrEmpty(rawFuelConsumption) &&
+                    !string.IsNullOrEmpty(rawWeight) &&
+                    !string.IsNullOrEmpty(rawMileage)
+                    )
+                {
+                    try
+                    {
+                        vehicle.FuelConsumption = Convert.ToDouble(rawFuelConsumption, CultureInfo.InvariantCulture);
+                        vehicle.Weight = Convert.ToDouble(rawWeight, CultureInfo.InvariantCulture);
+                        vehicle.Mileage = Convert.ToDouble(rawMileage, CultureInfo.InvariantCulture);
+                    }
+                    catch
+                    {
+                        CreateViewModel cvModel = new CreateViewModel(_vehicleTypesRepository);
+                        ViewBag.CreateViewModel = cvModel;
+                        return View(vehicle);
+                    }
+
+                    await _vehiclesRepository.Create(vehicle);
+                    return Redirect("~/Vehicle/Index");
+                }
+
+                CreateViewModel cvm = new CreateViewModel(_vehicleTypesRepository);
+                ViewBag.CreateViewModel = cvm;
+                return View(vehicle);
+            }
+
         }
 
         [HttpGet]
@@ -94,22 +130,22 @@ namespace WebAutopark.Controllers
             {
                 return Redirect("~/Vehicle/Index");
             }
-            IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result
-                .Select(vt => new VehicleTypeModel
-                {
-                    Name = vt.Name,
-                    VehicleTypeId = vt.VehicleTypeId
-                })
-                .ToList();
-            CreateViewModel cvm = new CreateViewModel();
-            foreach (var vehicleTypeModel in vehicleTypeModels)
-            {
-                cvm.VehicleTypeModels.Add(new SelectListItem
-                {
-                    Value = vehicleTypeModel.VehicleTypeId.ToString(),
-                    Text = vehicleTypeModel.Name
-                });
-            }
+            //IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result
+            //    .Select(vt => new VehicleTypeModel
+            //    {
+            //        Name = vt.Name,
+            //        VehicleTypeId = vt.VehicleTypeId
+            //    })
+            //    .ToList();
+            CreateViewModel cvm = new CreateViewModel(_vehicleTypesRepository);
+            //foreach (var vehicleTypeModel in vehicleTypeModels)
+            //{
+            //    cvm.VehicleTypeModels.Add(new SelectListItem
+            //    {
+            //        Value = vehicleTypeModel.VehicleTypeId.ToString(),
+            //        Text = vehicleTypeModel.Name
+            //    });
+            //}
             ViewBag.CreateViewModel = cvm;
             return View(await _vehiclesRepository.Get(vehicleId.Value));
         }

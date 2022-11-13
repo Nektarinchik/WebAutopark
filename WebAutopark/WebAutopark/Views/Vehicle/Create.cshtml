@@ -6,6 +6,10 @@
     ViewData["Title"] = "Create Vehicle";
 }
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
 <h2 class="display-6">Complete The Form</h2>
 <form asp-controller="Vehicle" asp-action="Create" method="post">
   <fieldset>
@@ -17,25 +21,35 @@
     <div class="form-group">
       <label asp-for="Model" class="form-label mt-4">Model</label>
       <input asp-for="Model" class="form-control" aria-describedby="modelHelp" placeholder="Enter Model Name" />
+      @Html.ValidationMessageFor(m => m.Model)<br />
+      <span asp-validation-for="Model" />
       <small id="modelHelp" class="form-text text-muted">Enter model name (e.g. Mercedes W211, BMW e60 etc.)</small>
     </div>
     <div class="form-group">
       <label asp-for="RegistrationNumber" class="form-label mt-4">Registration Number</label>
       <input asp-for="RegistrationNumber" class="form-control" aria-describedby="registrationNumberHelp" placeholder="Enter Registration number" />
+      @Html.ValidationMessageFor(m => m.RegistrationNumber)<br />
+      <span asp-validation-for="RegistrationNumber" />
       <small id="registrationNumberHelp" class="form-text text-muted">Enter registration number (e.g. 6582 EP-2 etc.)</small>
     </div>
     <div class="form-group">
       <label asp-for="Weight" class="form-label mt-4">Weight</label>
       <input asp-for="Weight" class="form-control" placeholder="Enter Weight" />
+      @Html.ValidationMessageFor(m => m.Weight)<br />
+      <span asp-validation-for="Weight" />
     </div>
     <div class="form-group">
       <label asp-for="Year" class="form-label mt-4">Year</label>
       <input asp-for="Year" class="form-control" aria-describedby="yearHelp" placeholder="Enter Year" />
+      @Html.ValidationMessageFor(m => m.Year)<br />
+      <span asp-validation-for="Year" />
       <small id="registrationNumberHelp" class="form-text text-muted">Enter year of manufacture of the car</small>
     </div>
     <div class="form-group">
       <label asp-for="Mileage" class="form-label mt-4">Mileage</label>
       <input asp-for="Mileage" class="form-control" placeholder="Enter Mileage" />
+      @Html.ValidationMessageFor(m => m.Mileage)<br />
+      <span asp-validation-for="Mileage" />
     </div>
     <div class="form-group">
       <label asp-for="Color" class="form-label mt-4">Color</label><br />
@@ -45,10 +59,14 @@
     <div class="form-group">
       <label asp-for="FuelConsumption" class="form-label mt-4">Fuel Consumption</label>
       <input asp-for="FuelConsumption" class="form-control" placeholder="Enter Fuel Consumption" />
+      @Html.ValidationMessageFor(m => m.FuelConsumption)<br />
+      <span asp-validation-for="FuelConsumption" />
     </div>
     <div class="form-group">
       <label asp-for="Volume" class="form-label mt-4">Volume</label>
       <input asp-for="Volume" class="form-control" placeholder="Enter Volume Of Tank" />
+      @Html.ValidationMessageFor(m => m.Volume)<br />
+      <span asp-validation-for="Volume" />
     </div>
     <hr size="3" />
     <button type="submit" class="btn btn-primary">Submit</button>
