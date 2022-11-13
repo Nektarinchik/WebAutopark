@@ -63,28 +63,28 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            CreateGetViewModel cvm = new CreateGetViewModel();
-            IEnumerable <Vehicles> vehicles = await _vehiclesRepository.GetAll();
-            foreach (var vehicle in vehicles)
-            {
-                cvm.Vehicles.Add(new SelectListItem
-                {
-                    Value = vehicle.VehicleId.ToString(),
-                    Text = $"Name: {vehicle.Model}\nRegistration Number: {vehicle.RegistrationNumber}"
-                });
-            }
+            CreateGetViewModel cvm = new CreateGetViewModel(_vehiclesRepository, _componentsRepository);
+            //IEnumerable <Vehicles> vehicles = await _vehiclesRepository.GetAll();
+            //foreach (var vehicle in vehicles)
+            //{
+            //    cvm.Vehicles.Add(new SelectListItem
+            //    {
+            //        Value = vehicle.VehicleId.ToString(),
+            //        Text = $"Name: {vehicle.Model}\nRegistration Number: {vehicle.RegistrationNumber}"
+            //    });
+            //}
 
-            IEnumerable<Components> components = await _componentsRepository.GetAll();
-            foreach (var component in components)
-            {
-                cvm.Components.Add(new SelectListItem
-                {
-                    Value = component.ComponentId.ToString(),
-                    Text = component.Name
-                });
-            }
+            //IEnumerable<Components> components = await _componentsRepository.GetAll();
+            //foreach (var component in components)
+            //{
+            //    cvm.Components.Add(new SelectListItem
+            //    {
+            //        Value = component.ComponentId.ToString(),
+            //        Text = component.Name
+            //    });
+            //}
 
             ViewBag.CreateViewModel = cvm;
             return View();
@@ -93,22 +93,29 @@ namespace WebAutopark.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreatePostViewModel cpvm)
         {
-            Orders order = new Orders
+            if (ModelState.IsValid)
             {
-                VehicleId = cpvm.VehicleId,
-                Date = cpvm.Date
-            };
-            _ = _ordersRepository.Create(order);
+                Orders order = new Orders
+                {
+                    VehicleId = cpvm.VehicleId,
+                    Date = cpvm.Date
+                };
+                _ = _ordersRepository.Create(order);
 
-            OrderItems orderItem = new OrderItems
-            {
-                OrderId = order.OrderId,
-                ComponentId = cpvm.ComponentId,
-                Quantity = cpvm.Quantity
-            };
-            await _ordersItemsRepository.Create(orderItem);
+                OrderItems orderItem = new OrderItems
+                {
+                    OrderId = order.OrderId,
+                    ComponentId = cpvm.ComponentId,
+                    Quantity = cpvm.Quantity
+                };
+                await _ordersItemsRepository.Create(orderItem);
 
-            return Redirect("~/Order/Index");
+                return Redirect("~/Order/Index");
+            }
+
+            CreateGetViewModel cvm = new CreateGetViewModel(_vehiclesRepository, _componentsRepository);
+            ViewBag.CreateViewModel = cvm;
+            return View(cpvm);
         }
 
         [HttpGet]

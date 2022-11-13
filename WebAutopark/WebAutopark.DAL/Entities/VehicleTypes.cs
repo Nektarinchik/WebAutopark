@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace WebAutopark.DAL.Entities
 {
     public sealed class VehicleTypes
     {
         public int VehicleTypeId { get; set; }
+
+        [Required]
         public string Name { get; set; } = null!;
         public double TaxCoefficient { get; set; }
         public VehicleTypes()

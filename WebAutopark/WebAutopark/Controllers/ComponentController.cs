@@ -25,8 +25,13 @@ namespace WebAutopark.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Components component)
         {
-            await _componentsRepository.Create(component);
-            return Redirect("~/Component/Index");
+            if (ModelState.IsValid)
+            {
+                await _componentsRepository.Create(component);
+                return Redirect("~/Component/Index");
+            }
+
+            return View(component);
         }
 
         [HttpGet]
@@ -53,8 +58,13 @@ namespace WebAutopark.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(Components component)
         {
-            await _componentsRepository.Update(component);
-            return Redirect("~/Component/Index");
+            if (ModelState.IsValid)
+            {
+                await _componentsRepository.Update(component);
+                return Redirect("~/Component/Index");
+            }
+
+            return View(component);
         }
     }
 }

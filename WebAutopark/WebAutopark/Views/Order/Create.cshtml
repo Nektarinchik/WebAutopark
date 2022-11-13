@@ -23,6 +23,8 @@
     <div class="form-group">
       <label asp-for="Quantity" class="form-label mt-4">Quantity</label>
       <input asp-for="Quantity" class="form-control" placeholder="Enter Quantity of Components" />
+      @Html.ValidationMessageFor(m => m.Quantity)<br />
+      <span asp-validation-for="Quantity" />
     </div>
     <div class="form-group">
       <label asp-for="Date" class="form-label mt-4">Date</label>

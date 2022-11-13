@@ -10,11 +10,15 @@
     <div class="form-group">
       <label asp-for="Name" class="form-label mt-4">Name</label>
       <input asp-for="Name" class="form-control" aria-describedby="nameHelp" placeholder="Enter Name">
+      @Html.ValidationMessageFor(m => m.Name)<br />
+      <span asp-validation-for="Name" />
       <small id="nameHelp" class="form-text text-muted">Enter name of your vehicle type (e.g. tractor, passenger etc.)</small>
     </div>
     <div class="form-group">
       <label asp-for="TaxCoefficient" class="form-label mt-4">Tax Coefficient</label>
       <input asp-for="TaxCoefficient" class="form-control" aria-describedby="taxCoefficientHelp" placeholder="Enter Tax Coefficient">
+      @Html.ValidationMessageFor(m => m.TaxCoefficient)<br />
+      <span asp-validation-for="TaxCoefficient" />
       <small id="taxCoefficientHelp" class="form-text text-muted">Enter value of tax coefficient(e.g. "1,2", "0,8", "1")</small>
     </div>
     <hr size="3" />
