@@ -10,6 +10,8 @@
     <div class="form-group">
       <label asp-for="Name" class="form-label mt-4">Name</label>
       <input asp-for="Name" class="form-control" aria-describedby="nameHelp" placeholder="Enter Name">
+      @Html.ValidationMessageFor(m => m.Name)<br />
+      <span asp-validation-for="Name" />
       <small id="nameHelp" class="form-text text-muted">Enter name of necessary component (e.g. cylinder head, distributor etc.)</small>
     </div>
     <hr size="3" />
