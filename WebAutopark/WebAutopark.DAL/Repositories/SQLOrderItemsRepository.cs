@@ -1,5 +1,7 @@
-﻿using Dapper;
+﻿using System.Collections.Generic;
+using Dapper;
 using System.Data;
+using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using WebAutopark.DAL.Entities;
@@ -9,7 +11,7 @@ namespace WebAutopark.DAL.Repositories
 {
     public class SQLOrderItemsRepository : IRepository<OrderItems>
     {
-        private string _connectionString = null!;
+        private string _connectionString = null!; //no need to initialize here, make it readonly
         public SQLOrderItemsRepository(string connectionString)
         {
             _connectionString = connectionString;

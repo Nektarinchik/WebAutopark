@@ -1,5 +1,7 @@
-﻿using Dapper;
+﻿using System.Collections.Generic;
+using Dapper;
 using System.Data;
+using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using WebAutopark.DAL.Entities;
@@ -10,7 +12,7 @@ namespace WebAutopark.DAL.Repositories
 {
     public sealed class SQLComponentsRepository : IRepository<Components>
     {
-        private string _connectionString = null!;
+        private string _connectionString = null!; //no need to initialize here, make it readonly
         public SQLComponentsRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -20,7 +22,7 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "INSERT INTO Components " +
+                string sqlQuery = @"INSERT INTO Components " + //we can use '@' instead of concatenation
                     "(Name) " +
                     "VALUES(@Name)";
                 await db.ExecuteAsync(sqlQuery, item);
@@ -56,7 +58,7 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "UPDATE Components " +
+                string sqlQuery = "UPDATE Components " + //we can use '@' instead of concatenation
                     "SET Name = @Name " +
                     "WHERE ComponentId = @ComponentId";
                 await db.ExecuteAsync(sqlQuery, item);

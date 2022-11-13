@@ -40,7 +40,7 @@
                         var buff = Model.VehicleTypes
                                     .Select(vt => vt)
                                     .Where(vt => vt.VehicleTypeId == vehicle.VehicleTypeId)
-                                    .FirstOrDefault();
+                                    .FirstOrDefault(); //we can simplify this
 
                         vehicleType.Name = buff!.Name;
                         vehicleType.VehicleTypeId = buff!.VehicleTypeId;
@@ -48,7 +48,7 @@
                     }
                   <td>
                     Name: @vehicleType.Name<br />
-                    Tax Coefficient: @vehicleType.TaxCoefficient.ToString()
+<!-- Why to string -->            Tax Coefficient: @vehicleType.TaxCoefficient.ToString() 
                   </td>
                   <td>@vehicle.Model</td>
                   <td>@vehicle.RegistrationNumber</td>

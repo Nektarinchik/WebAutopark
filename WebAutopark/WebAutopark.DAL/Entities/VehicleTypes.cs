@@ -9,7 +9,7 @@ namespace WebAutopark.DAL.Entities
     public sealed class VehicleTypes
     {
         public int VehicleTypeId { get; set; }
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = null!; //Don't initialize it here 
         public double TaxCoefficient { get; set; }
         public VehicleTypes()
         { }

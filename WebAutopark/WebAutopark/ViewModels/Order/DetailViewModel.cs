@@ -1,4 +1,5 @@
-﻿using WebAutopark.DAL.Entities;
+﻿using System;
+using WebAutopark.DAL.Entities;
 
 namespace WebAutopark.ViewModels.Order
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using WebAutopark.DAL.Interfaces;
 using WebAutopark.DAL.Entities;
 
@@ -6,7 +7,7 @@ namespace WebAutopark.Controllers
 {
     public class VehicleTypeController : Controller
     {
-        IRepository<VehicleTypes> _vehicleTypesRepository = null!;
+        IRepository<VehicleTypes> _vehicleTypesRepository = null!; //no need to initialize here, make it readonly
         public VehicleTypeController(IRepository<VehicleTypes> vehicleTypesRepository)
         {
             _vehicleTypesRepository = vehicleTypesRepository;
@@ -19,7 +20,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create() //rename
         {
             return View();
         }
@@ -31,7 +32,7 @@ namespace WebAutopark.Controllers
             return Redirect("~/VehicleType/Index");
         }
 
-        [HttpGet]
+        [HttpGet] //it's better to use HttpDelete for delete method
         public async Task<IActionResult> Delete(int? vehicleTypeId)
         {
             if (!vehicleTypeId.HasValue)
@@ -43,7 +44,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(int? vehicleTypeId)
+        public async Task<IActionResult> Update(int? vehicleTypeId) //Rename
         {
             if (!vehicleTypeId.HasValue)
             {
@@ -52,7 +53,7 @@ namespace WebAutopark.Controllers
             return View(await _vehicleTypesRepository.Get(vehicleTypeId.Value));
         }
 
-        [HttpPost]
+        [HttpPost] //Usually we use HttpPut to update method 
         public async Task<IActionResult> Update(VehicleTypes vehicleType)
         {
             await _vehicleTypesRepository.Update(vehicleType);

@@ -1,4 +1,5 @@
-﻿using WebAutopark.DAL.Entities;
+﻿using System;
+using WebAutopark.DAL.Entities;
 
 namespace WebAutopark.ViewModels.Order
 {
@@ -6,8 +7,8 @@ namespace WebAutopark.ViewModels.Order
     {
         public int OrderId { get; set; }
         public DateTime Date { get; set; }
-        public VehicleViewModel Vehicle { get; set; } = null!;
-        public Components Component { get; set; } = null!;
+        public VehicleViewModel Vehicle { get; set; } = null!; //don't initialize here
+        public Components Component { get; set; } = null!; //don't initialize here
         public int Quantity { get; set; }
     }
 }

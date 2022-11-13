@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAutopark.DAL.Interfaces;
 using WebAutopark.DAL.Entities;
@@ -10,8 +13,8 @@ namespace WebAutopark.Controllers
     
     public class VehicleController : Controller
     {
-        private IRepository<Vehicles> _vehiclesRepository;
-        private IRepository<VehicleTypes> _vehicleTypesRepository;
+        private IRepository<Vehicles> _vehiclesRepository; // make it readonly
+        private IRepository<VehicleTypes> _vehicleTypesRepository; // make it readonly
         public VehicleController(IRepository<Vehicles> vehiclesRepository, IRepository<VehicleTypes> vehicleTypesRepository)
         {
             _vehiclesRepository = vehiclesRepository;
@@ -46,9 +49,9 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create() //rename
         {
-            IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result
+            IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result //use await instead of result
                 .Select(vt => new VehicleTypeModel
                 {
                     Name = vt.Name,
@@ -75,7 +78,7 @@ namespace WebAutopark.Controllers
             return Redirect("~/Vehicle/Index");
         }
 
-        [HttpGet]
+        [HttpGet] //it's better to use HttpDelete for delete method
         public async Task<IActionResult> Delete(int? vehicleId)
         {
             if (!vehicleId.HasValue)
@@ -88,13 +91,13 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(int? vehicleId)
+        public async Task<IActionResult> Update(int? vehicleId) //Rename
         {
             if (!vehicleId.HasValue)
             {
                 return Redirect("~/Vehicle/Index");
             }
-            IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result
+            IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result //use await instead of result
                 .Select(vt => new VehicleTypeModel
                 {
                     Name = vt.Name,
@@ -114,7 +117,7 @@ namespace WebAutopark.Controllers
             return View(await _vehiclesRepository.Get(vehicleId.Value));
         }
 
-        [HttpPost]
+        [HttpPost] //Usually we use HttpPut to update method 
         public async Task<IActionResult> Update(Vehicles vehicle)
         {
             await _vehiclesRepository.Update(vehicle);
@@ -148,7 +151,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VehicleSort(SortState state = SortState.DEFAULT)
+        public async Task<IActionResult> VehicleSort(SortState state = SortState.DEFAULT) //Where do we use this method?
         {
             IndexViewModel ivm = new IndexViewModel
             {

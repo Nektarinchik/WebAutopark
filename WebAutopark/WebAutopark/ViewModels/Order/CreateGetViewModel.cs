@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAutopark.DAL.Entities;
 
 namespace WebAutopark.ViewModels.Order

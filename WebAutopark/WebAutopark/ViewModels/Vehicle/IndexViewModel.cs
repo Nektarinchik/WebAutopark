@@ -1,4 +1,5 @@
-﻿using WebAutopark.DAL.Entities;
+﻿using System.Collections.Generic;
+using WebAutopark.DAL.Entities;
 
 namespace WebAutopark.ViewModels.Vehicle
 {

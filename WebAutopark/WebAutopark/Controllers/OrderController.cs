@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAutopark.DAL.Entities;
 using WebAutopark.DAL.Interfaces;
@@ -10,13 +13,13 @@ namespace WebAutopark.Controllers
     public class OrderController : Controller
     {
 
-        private IRepository<Vehicles> _vehiclesRepository;
+        private IRepository<Vehicles> _vehiclesRepository; // make it readonly
 
-        private IRepository<Components> _componentsRepository;
+        private IRepository<Components> _componentsRepository; // make it readonly
 
-        private IRepository<Orders> _ordersRepository;
+        private IRepository<Orders> _ordersRepository; // make it readonly
 
-        private IRepository<OrderItems> _ordersItemsRepository;
+        private IRepository<OrderItems> _ordersItemsRepository; // make it readonly
         public OrderController(
             IRepository<Vehicles> vehicles,
             IRepository<Components> components,
@@ -33,15 +36,15 @@ namespace WebAutopark.Controllers
         {
             IEnumerable<Orders> orders = await _ordersRepository.GetAll();
             List<IndexViewModel> viewOrders = new List<IndexViewModel>();
-            Vehicles? vehicle = null;
-            OrderItems? orderItem = new OrderItems();
+            Vehicles? vehicle = null; //Why nullable?
+            OrderItems? orderItem = new OrderItems(); //Why nullable? No need to initialize here
             foreach (var order in orders)
             {
                 vehicle = await _vehiclesRepository.Get(order.VehicleId);
                 orderItem = _ordersItemsRepository.GetAll().Result
                     .Select(o => o)
                     .Where(o => o.OrderId == order.OrderId)
-                    .FirstOrDefault();
+                    .FirstOrDefault(); // We can simplify this.
 
                 IndexViewModel oivm = new IndexViewModel
                 {
@@ -63,7 +66,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create() //Rename
         {
             CreateGetViewModel cvm = new CreateGetViewModel();
             IEnumerable <Vehicles> vehicles = await _vehiclesRepository.GetAll();
@@ -124,7 +127,7 @@ namespace WebAutopark.Controllers
             var orderItem = _ordersItemsRepository.GetAll().Result
                 .Select(oi => oi)
                 .Where(oi => oi.OrderId == orderId)
-                .FirstOrDefault();
+                .FirstOrDefault(); // We can simplify this
             DetailViewModel dvm = new DetailViewModel
             {
                 Vehicle = new VehicleViewModel
