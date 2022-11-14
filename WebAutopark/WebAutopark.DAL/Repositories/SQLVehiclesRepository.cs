@@ -9,8 +9,7 @@ namespace WebAutopark.DAL.Repositories
 {
     public sealed class SQLVehiclesRepository : IRepository<Vehicles>
     {
-        private string _connectionString = null!;
-
+        readonly string _connectionString;
         public SQLVehiclesRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -19,9 +18,9 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "INSERT INTO Vehicles " +
-                    "(VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, Color, FuelConsumption, Volume) " +
-                    "VALUES(@VehicleTypeId, @Model, @RegistrationNumber, @Weight, @Year, @Mileage, @Color, @FuelConsumption, @Volume)";
+                string sqlQuery = @"INSERT INTO Vehicles
+                    (VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, Color, FuelConsumption, Volume)
+                    VALUES(@VehicleTypeId, @Model, @RegistrationNumber, @Weight, @Year, @Mileage, @Color, @FuelConsumption, @Volume)";
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }
@@ -54,10 +53,10 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "UPDATE Vehicles " +
-                    "SET VehicleTypeId = @VehicleTypeId, Model = @Model, RegistrationNumber = @RegistrationNumber, " +
-                    "Weight = @Weight, Year = @Year, Color = @Color, Mileage = @Mileage, FuelConsumption = @FuelConsumption, Volume = @Volume " +
-                    "WHERE VehicleId = @VehicleId";
+                string sqlQuery = @"UPDATE Vehicles
+                    SET VehicleTypeId = @VehicleTypeId, Model = @Model, RegistrationNumber = @RegistrationNumber,
+                    Weight = @Weight, Year = @Year, Color = @Color, Mileage = @Mileage, FuelConsumption = @FuelConsumption, Volume = @Volume
+                    WHERE VehicleId = @VehicleId";
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }
@@ -79,10 +78,10 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                return await db.QueryAsync<Vehicles>("SELECT * FROM Vehicles AS v " +
-                    "INNER JOIN VehicleTypes AS vt " +
-                    "ON v.VehicleTypeId = vt.VehicleTypeId " +
-                    "ORDER BY vt.Name");
+                return await db.QueryAsync<Vehicles>(@"SELECT * FROM Vehicles AS v
+                    INNER JOIN VehicleTypes AS vt
+                    ON v.VehicleTypeId = vt.VehicleTypeId
+                    ORDER BY vt.Name");
             }
         }
     }

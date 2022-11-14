@@ -100,7 +100,8 @@ namespace WebAutopark.Controllers
                     VehicleId = cpvm.VehicleId,
                     Date = cpvm.Date
                 };
-                _ = _ordersRepository.Create(order);
+
+                await _ordersRepository.Create(order);
 
                 OrderItems orderItem = new OrderItems
                 {

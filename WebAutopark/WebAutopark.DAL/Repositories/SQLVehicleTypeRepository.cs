@@ -9,7 +9,7 @@ namespace WebAutopark.DAL.Repositories
 {
     public sealed class SQLVehicleTypeRepository : IRepository<VehicleTypes>
     {
-        private string _connectionString = null!;
+        readonly string _connectionString;
         public SQLVehicleTypeRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -51,9 +51,9 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                var sqlQuery = "UPDATE VehicleTypes " +
-                    "SET Name = @Name, TaxCoefficient = @TaxCoefficient " +
-                    "WHERE VehicleTypeId = @VehicleTypeId";
+                var sqlQuery = @"UPDATE VehicleTypes
+                    SET Name = @Name, TaxCoefficient = @TaxCoefficient
+                    WHERE VehicleTypeId = @VehicleTypeId";
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }

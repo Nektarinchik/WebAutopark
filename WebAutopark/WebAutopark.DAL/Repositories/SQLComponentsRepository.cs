@@ -10,7 +10,7 @@ namespace WebAutopark.DAL.Repositories
 {
     public sealed class SQLComponentsRepository : IRepository<Components>
     {
-        private string _connectionString = null!;
+        readonly string _connectionString;
         public SQLComponentsRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -20,9 +20,9 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "INSERT INTO Components " +
-                    "(Name) " +
-                    "VALUES(@Name)";
+                string sqlQuery = @"INSERT INTO Components 
+                    (Name) 
+                    VALUES(@Name)";
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }
@@ -56,9 +56,9 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "UPDATE Components " +
-                    "SET Name = @Name " +
-                    "WHERE ComponentId = @ComponentId";
+                string sqlQuery = @"UPDATE Components
+                    SET Name = @Name
+                    WHERE ComponentId = @ComponentId";
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }
