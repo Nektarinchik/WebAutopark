@@ -7,7 +7,7 @@ namespace WebAutopark.ViewModels.Vehicle
         public int VehicleId { get; set; }
         public double Weight { get; set; }
         public string? RegistrationNumber { get; set; }
-        public string Model { get; set; } = null!;
+        public string? Model { get; set; }
         public int Year { get; set; }
         public double Mileage { get; set; }
         public Colors Color { get; set; }

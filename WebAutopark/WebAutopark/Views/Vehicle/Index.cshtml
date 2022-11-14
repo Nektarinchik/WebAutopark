@@ -38,7 +38,6 @@
                 <tr class="table-active">
                     @{
                         var buff = Model.VehicleTypes
-
                                     .FirstOrDefault(vt => vt.VehicleTypeId == vehicle.VehicleTypeId);
 
                         vehicleType.Name = buff!.Name;
@@ -58,13 +57,13 @@
                   <td>@vehicle.FuelConsumption</td>
                   <td>@vehicle.Volume</td>
                   <td><a asp-controller="Vehicle" asp-action="Delete" asp-route-vehicleId="@vehicle.VehicleId">Delete</a></td>
-                  <td><a asp-controller="Vehicle" asp-action="Update" asp-route-vehicleId="@vehicle.VehicleId">Update</a></td>
+                  <td><a asp-controller="Vehicle" asp-action="GetUpdate" asp-route-vehicleId="@vehicle.VehicleId">Update</a></td>
                   <td><a asp-controller="Vehicle" asp-action="Detail" asp-route-vehicleId="@vehicle.VehicleId">Detail</a></td>
                 </tr>
             }
       </tbody>
     </table>
     <p>
-        <a asp-controller="Vehicle" asp-action="Create">Create New Vehicle</a>
+        <a asp-controller="Vehicle" asp-action="GetCreate">Create New Vehicle</a>
     </p>
 </div>

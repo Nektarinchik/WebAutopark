@@ -4,7 +4,7 @@
 }
 
 <h2 class="display-6">Complete The Form</h2>
-<form method="post">
+<form asp-controller="VehicleType" asp-action="Update" method="post">
   <input asp-for="VehicleTypeId" type="hidden" value="@Model.VehicleTypeId" />
   <fieldset>
     <div class="form-group">

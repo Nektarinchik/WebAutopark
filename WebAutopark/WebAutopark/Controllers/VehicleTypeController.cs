@@ -6,7 +6,7 @@ namespace WebAutopark.Controllers
 {
     public class VehicleTypeController : Controller
     {
-        IRepository<VehicleTypes> _vehicleTypesRepository = null!;
+        readonly IRepository<VehicleTypes> _vehicleTypesRepository;
         public VehicleTypeController(IRepository<VehicleTypes> vehicleTypesRepository)
         {
             _vehicleTypesRepository = vehicleTypesRepository;
@@ -19,7 +19,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult GetCreate()
         {
             return View();
         }
@@ -37,19 +37,21 @@ namespace WebAutopark.Controllers
 
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(int? vehicleTypeId)
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromForm] int? vehicleTypeId)
         {
             if (!vehicleTypeId.HasValue)
             {
-                return Redirect("~/VehicleType/Index");
+                return Ok();
+                //return Redirect("~/VehicleType/Index");
             }
             await _vehicleTypesRepository.Delete(vehicleTypeId.Value);
-            return Redirect("~/VehicleType/Index");
+            return Ok();
+            //return Redirect("~/VehicleType/Index");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(int? vehicleTypeId)
+        public async Task<IActionResult> GetUpdate(int? vehicleTypeId)
         {
             if (!vehicleTypeId.HasValue)
             {
