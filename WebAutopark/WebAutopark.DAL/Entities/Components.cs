@@ -13,13 +13,8 @@ namespace WebAutopark.DAL.Entities
         public int ComponentId { get; set; }
 
         [Required(ErrorMessage = "This is required field!")]
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; }
         public Components() 
         { }
-        public Components(int componentId, string name)
-        {
-            ComponentId = componentId;
-            Name = name;
-        }
     }
 }

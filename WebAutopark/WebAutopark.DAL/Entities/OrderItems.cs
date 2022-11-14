@@ -14,12 +14,5 @@ namespace WebAutopark.DAL.Entities
         public int Quantity { get; set; }
         public OrderItems()
         { }
-        public OrderItems(int orderItemId, int orderId, int componentId, int quantity)
-        {
-            OrderItemId = orderItemId;
-            OrderId = orderId;
-            ComponentId = componentId;
-            Quantity = quantity;
-        }
     }
 }

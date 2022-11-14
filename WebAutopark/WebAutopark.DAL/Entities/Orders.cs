@@ -13,11 +13,5 @@ namespace WebAutopark.DAL.Entities
         public DateTime Date { get; set; }
         public Orders()
         { }
-        public Orders(int orderId, int vehicleId, DateTime date)
-        {
-            OrderId = orderId;
-            VehicleId = vehicleId;
-            Date = date;
-        }
     }
 }
