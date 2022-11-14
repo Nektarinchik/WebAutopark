@@ -7,12 +7,13 @@ namespace WebAutopark.ViewModels.Vehicle
 {
     public class CreateViewModel
     {
-        private IRepository<VehicleTypes> _vehicleTypesRepository = null!;
-        public List<SelectListItem> VehicleTypeModels { get; set; } = new List<SelectListItem>();
+        private IRepository<VehicleTypes> _vehicleTypesRepository;
+        public List<SelectListItem> VehicleTypeModels { get; set; }
         public CreateViewModel(IRepository<VehicleTypes> vehicleTypesRepository)
         {
             _vehicleTypesRepository = vehicleTypesRepository;
 
+            var asyncResult = _vehicleTypesRepository.GetAll();
             IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result
                .Select(vt => new VehicleTypeModel
                {
@@ -21,6 +22,7 @@ namespace WebAutopark.ViewModels.Vehicle
                })
                .ToList();
 
+            VehicleTypeModels = new List<SelectListItem>();
             foreach (var vehicleTypeModel in vehicleTypeModels)
             {
                 VehicleTypeModels.Add(new SelectListItem

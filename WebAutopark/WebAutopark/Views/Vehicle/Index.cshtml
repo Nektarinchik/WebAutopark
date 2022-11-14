@@ -38,9 +38,8 @@
                 <tr class="table-active">
                     @{
                         var buff = Model.VehicleTypes
-                                    .Select(vt => vt)
-                                    .Where(vt => vt.VehicleTypeId == vehicle.VehicleTypeId)
-                                    .FirstOrDefault();
+
+                                    .FirstOrDefault(vt => vt.VehicleTypeId == vehicle.VehicleTypeId);
 
                         vehicleType.Name = buff!.Name;
                         vehicleType.VehicleTypeId = buff!.VehicleTypeId;
