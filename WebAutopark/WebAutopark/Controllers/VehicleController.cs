@@ -10,8 +10,8 @@ namespace WebAutopark.Controllers
     
     public class VehicleController : Controller
     {
-        readonly IRepository<Vehicles> _vehiclesRepository;
-        readonly IRepository<VehicleTypes> _vehicleTypesRepository;
+        private readonly IRepository<Vehicles> _vehiclesRepository;
+        private readonly IRepository<VehicleTypes> _vehicleTypesRepository;
         public VehicleController(IRepository<Vehicles> vehiclesRepository, IRepository<VehicleTypes> vehicleTypesRepository)
         {
             _vehiclesRepository = vehiclesRepository;

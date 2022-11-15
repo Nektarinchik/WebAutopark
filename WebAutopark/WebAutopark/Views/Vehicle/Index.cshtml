@@ -57,8 +57,7 @@
                   <td>@vehicle.FuelConsumption</td>
                   <td>@vehicle.Volume</td>
                   <td><button onclick="buttonHandler(@vehicle.VehicleId)" id="btnDelete" class="btn btn-danger">Delete</button></td>
-@*                  <td><a asp-controller="Vehicle" asp-action="Delete" asp-route-vehicleId="@vehicle.VehicleId">Delete</a></td>
-*@                  <td><a asp-controller="Vehicle" asp-action="GetUpdate" asp-route-vehicleId="@vehicle.VehicleId">Update</a></td>
+                  <td><a asp-controller="Vehicle" asp-action="GetUpdate" asp-route-vehicleId="@vehicle.VehicleId">Update</a></td>
                   <td><a asp-controller="Vehicle" asp-action="Detail" asp-route-vehicleId="@vehicle.VehicleId">Detail</a></td>
                 </tr>
             }
