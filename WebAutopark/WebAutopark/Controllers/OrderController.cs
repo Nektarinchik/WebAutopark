@@ -37,7 +37,10 @@ namespace WebAutopark.Controllers
             OrderItems? orderItem = new OrderItems();
             foreach (var order in orders)
             {
-                vehicle = await _vehiclesRepository.Get(order.VehicleId);
+                if (order.VehicleId.HasValue)
+                {
+                    vehicle = await _vehiclesRepository.Get(order.VehicleId.Value);
+                }
                 orderItem = _ordersItemsRepository.GetAll().Result
                     .Select(o => o)
                     .Where(o => o.OrderId == order.OrderId)
@@ -49,9 +52,9 @@ namespace WebAutopark.Controllers
                     Date = order.Date,
                     Vehicle = new VehicleViewModel
                     {
-                        VehicleId = vehicle.VehicleId,
-                        RegistrationNumber = vehicle.RegistrationNumber,
-                        Model = vehicle.Model
+                        VehicleId = vehicle?.VehicleId,
+                        RegistrationNumber = vehicle?.RegistrationNumber,
+                        Model = vehicle?.Model
                     },
                     Component = await _componentsRepository.Get(orderItem.ComponentId),
                     Quantity = orderItem.Quantity
@@ -128,7 +131,11 @@ namespace WebAutopark.Controllers
             }
 
             var order = await _ordersRepository.Get(orderId.Value);
-            var vehicle = await _vehiclesRepository.Get(order.VehicleId);
+            Vehicles? vehicle = null;
+            if (order.VehicleId.HasValue)
+            {
+                vehicle = await _vehiclesRepository.Get(order.VehicleId.Value);
+            }
             var orderItem = _ordersItemsRepository.GetAll().Result
                 .Select(oi => oi)
                 .Where(oi => oi.OrderId == orderId)
@@ -137,14 +144,20 @@ namespace WebAutopark.Controllers
             {
                 Vehicle = new VehicleViewModel
                 {
-                    VehicleId = vehicle.VehicleId,
-                    Model = vehicle.Model,
-                    RegistrationNumber = vehicle.RegistrationNumber
+                    VehicleId = vehicle?.VehicleId,
+                    Model = vehicle?.Model,
+                    RegistrationNumber = vehicle?.RegistrationNumber
                 },
-                Component = await _componentsRepository.Get(orderItem.ComponentId),
+                Component = null,
                 Date = order.Date,
-                Quantity = orderItem.Quantity
+                Quantity = null
             };
+
+            if (orderItem != null)
+            {
+                dvm.Component = await _componentsRepository.Get(orderItem.ComponentId);
+                dvm.Quantity = orderItem.Quantity;
+            }
 
             return View(dvm);
         }
