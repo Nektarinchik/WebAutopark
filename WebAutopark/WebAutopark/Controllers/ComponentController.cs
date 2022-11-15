@@ -6,8 +6,7 @@ namespace WebAutopark.Controllers
 {
     public class ComponentController : Controller
     {
-        private IRepository<Components> _componentsRepository;
-
+        private readonly IRepository<Components> _componentsRepository;
         public ComponentController(IRepository<Components> componentsRepository)
         {
             _componentsRepository = componentsRepository;
@@ -18,10 +17,11 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult GetCreate()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(Components component)
         {
@@ -34,19 +34,19 @@ namespace WebAutopark.Controllers
             return View(component);
         }
 
-        [HttpGet]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int? componentId)
         {
             if (!componentId.HasValue)
             {
-                return Redirect("~/Component/Index");
+                return Ok();
             }
             await _componentsRepository.Delete(componentId.Value);
-            return Redirect("~/Component/Index");
+            return Ok();
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(int? componentId)
+        public async Task<IActionResult> GetUpdate(int? componentId)
         {
             if (!componentId.HasValue)
             {
@@ -55,13 +55,13 @@ namespace WebAutopark.Controllers
             return View(await _componentsRepository.Get(componentId.Value));
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> Update(Components component)
         {
             if (ModelState.IsValid)
             {
                 await _componentsRepository.Update(component);
-                return Redirect("~/Component/Index");
+                return Ok();
             }
 
             return View(component);

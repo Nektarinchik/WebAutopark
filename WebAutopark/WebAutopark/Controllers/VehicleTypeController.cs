@@ -6,7 +6,7 @@ namespace WebAutopark.Controllers
 {
     public class VehicleTypeController : Controller
     {
-        readonly IRepository<VehicleTypes> _vehicleTypesRepository;
+        private readonly IRepository<VehicleTypes> _vehicleTypesRepository;
         public VehicleTypeController(IRepository<VehicleTypes> vehicleTypesRepository)
         {
             _vehicleTypesRepository = vehicleTypesRepository;
@@ -43,11 +43,9 @@ namespace WebAutopark.Controllers
             if (!vehicleTypeId.HasValue)
             {
                 return Ok();
-                //return Redirect("~/VehicleType/Index");
             }
             await _vehicleTypesRepository.Delete(vehicleTypeId.Value);
             return Ok();
-            //return Redirect("~/VehicleType/Index");
         }
 
         [HttpGet]
