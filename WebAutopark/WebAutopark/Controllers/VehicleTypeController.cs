@@ -60,13 +60,13 @@ namespace WebAutopark.Controllers
             return View(await _vehicleTypesRepository.Get(vehicleTypeId.Value));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Update(VehicleTypes vehicleType)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm]VehicleTypes vehicleType)
         {
             if (ModelState.IsValid)
             {
                 await _vehicleTypesRepository.Update(vehicleType);
-                return Redirect("~/VehicleType/Index");
+                return Ok();
             }
 
             return View(vehicleType);

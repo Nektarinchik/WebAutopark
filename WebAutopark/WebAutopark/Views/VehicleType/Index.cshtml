@@ -21,7 +21,6 @@
                   <td>@vehicleType.Name</td>
                   <td>@vehicleType.TaxCoefficient</td>
                   <td><button value="@vehicleType.VehicleTypeId" onclick="buttonHandler(@vehicleType.VehicleTypeId)" id="btnDelete" class="btn btn-danger">Delete</button></td>
-@*                  <td><a href="~/VehicleType/Delete/?vehicleTypeId=@vehicleType.VehicleTypeId">Delete</a></td>*@
                   <td><a href="~/VehicleType/GetUpdate/?vehicleTypeId=@vehicleType.VehicleTypeId">Update</a></td>
                 </tr>
             }
@@ -30,6 +29,7 @@
     <p>
         <a asp-controller="VehicleType" asp-action="GetCreate">Create New Vehicle Type</a>
     </p>
+
     @section Scripts
     {
         <script type="text/javascript">
@@ -45,17 +45,5 @@
                 }
 
         </script>
-@*        <script type="text/javascript">
-        $('#btnDelete').on('click', function (e) {
-            var val = $(this).val();
-            console.log(val);
-
-            $.ajax({
-                url: '@Url.Action("Delete", "VehicleType")',
-		        type: 'DELETE',
-                data: { vehicleTypeId: val }
-		        })
-            });
-        </script>*@
     }    
 </div>
