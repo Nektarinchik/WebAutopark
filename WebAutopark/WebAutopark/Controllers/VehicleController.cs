@@ -10,8 +10,8 @@ namespace WebAutopark.Controllers
     
     public class VehicleController : Controller
     {
-        private IRepository<Vehicles> _vehiclesRepository;
-        private IRepository<VehicleTypes> _vehicleTypesRepository;
+        private readonly IRepository<Vehicles> _vehiclesRepository;
+        private readonly IRepository<VehicleTypes> _vehicleTypesRepository;
         public VehicleController(IRepository<Vehicles> vehiclesRepository, IRepository<VehicleTypes> vehicleTypesRepository)
         {
             _vehiclesRepository = vehiclesRepository;
@@ -46,24 +46,9 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult GetCreate()
         {
-            //IEnumerable<VehicleTypeModel> vehicleTypeModels = _vehicleTypesRepository.GetAll().Result
-            //    .Select(vt => new VehicleTypeModel
-            //    {
-            //        Name = vt.Name,
-            //        VehicleTypeId = vt.VehicleTypeId
-            //    })
-            //    .ToList();
             CreateViewModel cvm = new CreateViewModel(_vehicleTypesRepository);
-            //foreach (var vehicleTypeModel in vehicleTypeModels)
-            //{
-            //    cvm.VehicleTypeModels.Add(new SelectListItem
-            //    {
-            //        Value = vehicleTypeModel.VehicleTypeId.ToString(),
-            //        Text = vehicleTypeModel.Name
-            //    });
-            //}
             ViewBag.CreateViewModel = cvm;
             return View();
         }
@@ -78,47 +63,6 @@ namespace WebAutopark.Controllers
             }
             else
             {
-                foreach (var pair in ModelState)
-                {
-                    if (pair.Value.ValidationState == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
-                    {
-                        if (pair.Key != "FuelConsumption" && 
-                            pair.Key != "Weight" && 
-                            pair.Key != "Mileage"
-                            )
-                        {
-                            CreateViewModel cvModel = new CreateViewModel(_vehicleTypesRepository);
-                            ViewBag.CreateViewModel = cvModel;
-                            return View(vehicle);
-                        }
-                    }
-                }
-                string? rawFuelConsumption = ModelState?["FuelConsumption"]?.RawValue?.ToString();
-                string? rawWeight = ModelState?["Weight"]?.RawValue?.ToString();
-                string? rawMileage = ModelState?["Mileage"]?.RawValue?.ToString();
-
-                if (!string.IsNullOrEmpty(rawFuelConsumption) &&
-                    !string.IsNullOrEmpty(rawWeight) &&
-                    !string.IsNullOrEmpty(rawMileage)
-                    )
-                {
-                    try
-                    {
-                        vehicle.FuelConsumption = Convert.ToDouble(rawFuelConsumption, CultureInfo.InvariantCulture);
-                        vehicle.Weight = Convert.ToDouble(rawWeight, CultureInfo.InvariantCulture);
-                        vehicle.Mileage = Convert.ToDouble(rawMileage, CultureInfo.InvariantCulture);
-                    }
-                    catch
-                    {
-                        CreateViewModel cvModel = new CreateViewModel(_vehicleTypesRepository);
-                        ViewBag.CreateViewModel = cvModel;
-                        return View(vehicle);
-                    }
-
-                    await _vehiclesRepository.Create(vehicle);
-                    return Redirect("~/Vehicle/Index");
-                }
-
                 CreateViewModel cvm = new CreateViewModel(_vehicleTypesRepository);
                 ViewBag.CreateViewModel = cvm;
                 return View(vehicle);
@@ -126,20 +70,20 @@ namespace WebAutopark.Controllers
 
         }
 
-        [HttpGet]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int? vehicleId)
         {
             if (!vehicleId.HasValue)
             {
-                return Redirect("~/Vehicle/Index");
+                return Ok();
             }
 
             await _vehiclesRepository.Delete(vehicleId.Value);
-            return Redirect("~/Vehicle/Index");
+            return Ok();
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(int? vehicleId)
+        public async Task<IActionResult> GetUpdate(int? vehicleId)
         {
             if (!vehicleId.HasValue)
             {
@@ -160,50 +104,9 @@ namespace WebAutopark.Controllers
             }
             else
             {
-                foreach (var pair in ModelState)
-                {
-                    if (pair.Value.ValidationState == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid)
-                    {
-                        if (pair.Key != "FuelConsumption" &&
-                            pair.Key != "Weight" &&
-                            pair.Key != "Mileage"
-                            )
-                        {
-                            CreateViewModel cvModel = new CreateViewModel(_vehicleTypesRepository);
-                            ViewBag.CreateViewModel = cvModel;
-                            return View(vehicle);
-                        }
-                    }
-                }
-                string? rawFuelConsumption = ModelState?["FuelConsumption"]?.RawValue?.ToString();
-                string? rawWeight = ModelState?["Weight"]?.RawValue?.ToString();
-                string? rawMileage = ModelState?["Mileage"]?.RawValue?.ToString();
-
-                if (!string.IsNullOrEmpty(rawFuelConsumption) &&
-                    !string.IsNullOrEmpty(rawWeight) &&
-                    !string.IsNullOrEmpty(rawMileage)
-                    )
-                {
-                    try
-                    {
-                        vehicle.FuelConsumption = Convert.ToDouble(rawFuelConsumption, CultureInfo.InvariantCulture);
-                        vehicle.Weight = Convert.ToDouble(rawWeight, CultureInfo.InvariantCulture);
-                        vehicle.Mileage = Convert.ToDouble(rawMileage, CultureInfo.InvariantCulture);
-                    }
-                    catch
-                    {
-                        CreateViewModel cvModel = new CreateViewModel(_vehicleTypesRepository);
-                        ViewBag.CreateViewModel = cvModel;
-                        return View(vehicle);
-                    }
-
-                    await _vehiclesRepository.Update(vehicle);
-                    return Redirect("~/Vehicle/Index");
-                }
-
                 CreateViewModel cvm = new CreateViewModel(_vehicleTypesRepository);
                 ViewBag.CreateViewModel = cvm;
-                return View(vehicle);
+                return View("GetUpdate", vehicle);
             }
         }
 
@@ -232,33 +135,5 @@ namespace WebAutopark.Controllers
 
             return View(vehicleDetailViewModel);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> VehicleSort(SortState state = SortState.DEFAULT)
-        {
-            IndexViewModel ivm = new IndexViewModel
-            {
-                VehicleTypes = await _vehicleTypesRepository.GetAll(),
-                Vehicles = await _vehiclesRepository.GetAll()
-            };
-            switch (state)
-            {
-                case SortState.DEFAULT:
-                    break;
-                case SortState.MODEL:
-                    ivm.Vehicles.ToList().Sort();
-                    break;
-                case SortState.VEHICLETYPE:
-                    ivm.Vehicles.ToList().Reverse();
-                    break;
-                case SortState.MILEAGE:
-                    ivm.Vehicles.ToList().Sort();
-                    break;
-                default:
-                    break;
-            }
-            return PartialView(ivm);
-        }
-        
     }
 }

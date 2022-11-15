@@ -18,13 +18,30 @@
             {
                 <tr class="table-active">
                   <td>@component.Name</td>
-                  <td><a href="~/Component/Delete/?componentId=@component.ComponentId">Delete</a></td>
-                  <td><a href="~/Component/Update/?componentId=@component.ComponentId">Update</a></td>
+                  <td><button onclick="buttonHandler(@component.ComponentId)" id="btnDelete" class="btn btn-danger">Delete</button></td>
+                  <td><a asp-controller="Component" asp-action="GetUpdate" asp-route-componentId="@component.ComponentId">Update</a></td>
                 </tr>
             }
       </tbody>
     </table>
     <p>
-        <a href="~/Component/Create">Create New Component</a>
+        <a asp-controller="Component" asp-action="GetCreate">Create New Component</a>
     </p>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function buttonHandler(id) {
+            $.ajax({
+                url: '@Url.Action("Delete", "Component")',
+		        type: 'DELETE',
+                data: { componentId: id },
+                success: function (xml) {
+                    location.reload(true);
+                }
+                });
+            }
+
+    </script>
+}    

@@ -9,7 +9,7 @@ namespace WebAutopark.DAL.Repositories
 {
     public class SQLOrderItemsRepository : IRepository<OrderItems>
     {
-        private string _connectionString = null!;
+        readonly string _connectionString;
         public SQLOrderItemsRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -18,9 +18,9 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "INSERT INTO OrderItems " +
-                    "(OrderId, ComponentId, Quantity) " +
-                    "VALUES(@OrderId, @ComponentId, @Quantity)";
+                string sqlQuery = @"INSERT INTO OrderItems
+                    (OrderId, ComponentId, Quantity)
+                    VALUES(@OrderId, @ComponentId, @Quantity)";
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }
@@ -55,9 +55,9 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "UPDATE OrderItems " +
-                    "SET OrderId = @OrderId, ComponentId = @ComponentId, Quantity = @Quantity" +
-                    "WHERE OrderItemId = @OrderItemId";
+                string sqlQuery = @"UPDATE OrderItems
+                    SET OrderId = @OrderId, ComponentId = @ComponentId, Quantity = @Quantity
+                    WHERE OrderItemId = @OrderItemId";
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }

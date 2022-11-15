@@ -4,7 +4,7 @@
 }
 
 <h2 class="display-6">Complete The Form</h2>
-<form method="post">
+<form method="put" id="submitUpdateForm">
   <input asp-for="VehicleTypeId" type="hidden" value="@Model.VehicleTypeId" />
   <fieldset>
     <div class="form-group">
@@ -29,3 +29,23 @@
 <p>
     <a href="~/VehicleType/Index">Back To Vehicle Types List</a>
 </p>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#submitUpdateForm').submit(function (event) {
+                event.preventDefault();
+                var fd = $(this).serialize();
+                $.ajax({
+                    url: '@Url.Action("Update", "VehicleType")',
+                    data: fd,
+                    type: 'PUT',
+                    success: function (response) {
+                        window.location.href = '@Url.Action("Index", "VehicleType")';
+                    }
+                })
+            });
+        });
+    </script>
+}

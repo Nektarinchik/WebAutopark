@@ -9,7 +9,7 @@ namespace WebAutopark.DAL.Repositories
 {
     public class SQLOrdersRepository : IRepository<Orders>
     {
-        private string _connectionString = null!;
+        readonly string _connectionString;
         public SQLOrdersRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -19,10 +19,12 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "INSERT INTO Orders " +
-                    "(VehicleId, Date) " +
-                    "VALUES(@VehicleId, @Date); SELECT CAST(SCOPE_IDENTITY() as int)";
-                item.OrderId = db.QueryAsync<int>(sqlQuery, item).Result.FirstOrDefault();
+                string sqlQuery = @"INSERT INTO Orders
+                    (VehicleId, Date)
+                    VALUES(@VehicleId, @Date); SELECT CAST(SCOPE_IDENTITY() as int)";
+                var asyncResult = await db.QueryAsync<int>(sqlQuery, item);
+                item.OrderId = asyncResult.First();
+                //item.OrderId = db.QueryAsync<int>(sqlQuery, item).Result.FirstOrDefault();
             }
         }
 
@@ -56,9 +58,9 @@ namespace WebAutopark.DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string sqlQuery = "UPDATE Orders " +
-                    "SET VehicleId = @VehicleId, Date = @Date " +
-                    "WHERE OrderId = @OrderId";
+                string sqlQuery = @"UPDATE Orders
+                    SET VehicleId = @VehicleId, Date = @Date
+                    WHERE OrderId = @OrderId";
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }

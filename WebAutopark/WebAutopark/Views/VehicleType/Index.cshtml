@@ -20,13 +20,30 @@
                 <tr class="table-active">
                   <td>@vehicleType.Name</td>
                   <td>@vehicleType.TaxCoefficient</td>
-                  <td><a href="~/VehicleType/Delete/?vehicleTypeId=@vehicleType.VehicleTypeId">Delete</a></td>
-                  <td><a href="~/VehicleType/Update/?vehicleTypeId=@vehicleType.VehicleTypeId">Update</a></td>
+                  <td><button onclick="buttonHandler(@vehicleType.VehicleTypeId)" id="btnDelete" class="btn btn-danger">Delete</button></td>
+                  <td><a href="~/VehicleType/GetUpdate/?vehicleTypeId=@vehicleType.VehicleTypeId">Update</a></td>
                 </tr>
             }
       </tbody>
     </table>
     <p>
-        <a href="~/VehicleType/Create">Create New Vehicle Type</a>
+        <a asp-controller="VehicleType" asp-action="GetCreate">Create New Vehicle Type</a>
     </p>
+
+    @section Scripts
+    {
+        <script type="text/javascript">
+            function buttonHandler(id) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "VehicleType")',
+		            type: 'DELETE',
+                    data: { vehicleTypeId: id },
+                    success: function (xml) {
+                        location.reload(true);
+                    }
+                    });
+                }
+
+        </script>
+    }    
 </div>

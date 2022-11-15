@@ -7,11 +7,11 @@ namespace WebAutopark.ViewModels.Order
 {
     public class CreateGetViewModel
     {
-        public List<SelectListItem> Vehicles { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> Components { get; set; } = new List<SelectListItem>();
-
+        public List<SelectListItem> Vehicles { get; set; }
+        public List<SelectListItem> Components { get; set; }
         public CreateGetViewModel(IRepository<Vehicles> vehiclesRepository, IRepository<Components> componentsRepository)
         {
+            Vehicles = new List<SelectListItem>();
             IEnumerable<Vehicles> vehicles = vehiclesRepository.GetAll().Result;
             foreach (var vehicle in vehicles)
             {
@@ -22,6 +22,7 @@ namespace WebAutopark.ViewModels.Order
                 });
             }
 
+            Components = new List<SelectListItem>();
             IEnumerable<Components> components = componentsRepository.GetAll().Result;
             foreach (var component in components)
             {

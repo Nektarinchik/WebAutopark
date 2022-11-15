@@ -10,13 +10,13 @@ namespace WebAutopark.Controllers
     public class OrderController : Controller
     {
 
-        private IRepository<Vehicles> _vehiclesRepository;
+        private readonly IRepository<Vehicles> _vehiclesRepository;
 
-        private IRepository<Components> _componentsRepository;
+        private readonly IRepository<Components> _componentsRepository;
 
-        private IRepository<Orders> _ordersRepository;
+        private readonly IRepository<Orders> _ordersRepository;
 
-        private IRepository<OrderItems> _ordersItemsRepository;
+        private readonly IRepository<OrderItems> _ordersItemsRepository;
         public OrderController(
             IRepository<Vehicles> vehicles,
             IRepository<Components> components,
@@ -37,11 +37,12 @@ namespace WebAutopark.Controllers
             OrderItems? orderItem = new OrderItems();
             foreach (var order in orders)
             {
-                vehicle = await _vehiclesRepository.Get(order.VehicleId);
+                if (order.VehicleId.HasValue)
+                {
+                    vehicle = await _vehiclesRepository.Get(order.VehicleId.Value);
+                }
                 orderItem = _ordersItemsRepository.GetAll().Result
-                    .Select(o => o)
-                    .Where(o => o.OrderId == order.OrderId)
-                    .FirstOrDefault();
+                    .FirstOrDefault(o => o.OrderId == order.OrderId);
 
                 IndexViewModel oivm = new IndexViewModel
                 {
@@ -49,13 +50,19 @@ namespace WebAutopark.Controllers
                     Date = order.Date,
                     Vehicle = new VehicleViewModel
                     {
-                        VehicleId = vehicle.VehicleId,
-                        RegistrationNumber = vehicle.RegistrationNumber,
-                        Model = vehicle.Model
+                        VehicleId = vehicle?.VehicleId,
+                        RegistrationNumber = vehicle?.RegistrationNumber,
+                        Model = vehicle?.Model
                     },
-                    Component = await _componentsRepository.Get(orderItem.ComponentId),
-                    Quantity = orderItem.Quantity
+                    Component = null,
+                    Quantity = 0
                 };
+
+                if (!ReferenceEquals(orderItem, null))
+                {
+                    oivm.Component = await _componentsRepository.Get(orderItem.ComponentId);
+                    oivm.Quantity = orderItem.Quantity;
+                }
                 viewOrders.Add(oivm);
             }
 
@@ -66,26 +73,6 @@ namespace WebAutopark.Controllers
         public IActionResult Create()
         {
             CreateGetViewModel cvm = new CreateGetViewModel(_vehiclesRepository, _componentsRepository);
-            //IEnumerable <Vehicles> vehicles = await _vehiclesRepository.GetAll();
-            //foreach (var vehicle in vehicles)
-            //{
-            //    cvm.Vehicles.Add(new SelectListItem
-            //    {
-            //        Value = vehicle.VehicleId.ToString(),
-            //        Text = $"Name: {vehicle.Model}\nRegistration Number: {vehicle.RegistrationNumber}"
-            //    });
-            //}
-
-            //IEnumerable<Components> components = await _componentsRepository.GetAll();
-            //foreach (var component in components)
-            //{
-            //    cvm.Components.Add(new SelectListItem
-            //    {
-            //        Value = component.ComponentId.ToString(),
-            //        Text = component.Name
-            //    });
-            //}
-
             ViewBag.CreateViewModel = cvm;
             return View();
         }
@@ -100,7 +87,8 @@ namespace WebAutopark.Controllers
                     VehicleId = cpvm.VehicleId,
                     Date = cpvm.Date
                 };
-                _ = _ordersRepository.Create(order);
+
+                await _ordersRepository.Create(order);
 
                 OrderItems orderItem = new OrderItems
                 {
@@ -127,23 +115,32 @@ namespace WebAutopark.Controllers
             }
 
             var order = await _ordersRepository.Get(orderId.Value);
-            var vehicle = await _vehiclesRepository.Get(order.VehicleId);
+            Vehicles? vehicle = null;
+            if (order.VehicleId.HasValue)
+            {
+                vehicle = await _vehiclesRepository.Get(order.VehicleId.Value);
+            }
             var orderItem = _ordersItemsRepository.GetAll().Result
-                .Select(oi => oi)
-                .Where(oi => oi.OrderId == orderId)
-                .FirstOrDefault();
+                .FirstOrDefault(oi => oi.OrderId == orderId);
+
             DetailViewModel dvm = new DetailViewModel
             {
                 Vehicle = new VehicleViewModel
                 {
-                    VehicleId = vehicle.VehicleId,
-                    Model = vehicle.Model,
-                    RegistrationNumber = vehicle.RegistrationNumber
+                    VehicleId = vehicle?.VehicleId,
+                    Model = vehicle?.Model,
+                    RegistrationNumber = vehicle?.RegistrationNumber
                 },
-                Component = await _componentsRepository.Get(orderItem.ComponentId),
+                Component = null,
                 Date = order.Date,
-                Quantity = orderItem.Quantity
+                Quantity = null
             };
+
+            if (orderItem != null)
+            {
+                dvm.Component = await _componentsRepository.Get(orderItem.ComponentId);
+                dvm.Quantity = orderItem.Quantity;
+            }
 
             return View(dvm);
         }
