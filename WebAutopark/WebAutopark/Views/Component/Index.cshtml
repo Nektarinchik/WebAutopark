@@ -18,7 +18,7 @@
             {
                 <tr class="table-active">
                   <td>@component.Name</td>
-                  <td><button value="@component.ComponentId" onclick="buttonHandler(@component.ComponentId)" id="btnDelete" class="btn btn-danger">Delete</button></td>
+                  <td><button onclick="buttonHandler(@component.ComponentId)" id="btnDelete" class="btn btn-danger">Delete</button></td>
                   <td><a asp-controller="Component" asp-action="GetUpdate" asp-route-componentId="@component.ComponentId">Update</a></td>
                 </tr>
             }

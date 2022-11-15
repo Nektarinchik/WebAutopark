@@ -56,8 +56,9 @@
                   <td>@vehicle.Color.ToString()</td>
                   <td>@vehicle.FuelConsumption</td>
                   <td>@vehicle.Volume</td>
-                  <td><a asp-controller="Vehicle" asp-action="Delete" asp-route-vehicleId="@vehicle.VehicleId">Delete</a></td>
-                  <td><a asp-controller="Vehicle" asp-action="GetUpdate" asp-route-vehicleId="@vehicle.VehicleId">Update</a></td>
+                  <td><button onclick="buttonHandler(@vehicle.VehicleId)" id="btnDelete" class="btn btn-danger">Delete</button></td>
+@*                  <td><a asp-controller="Vehicle" asp-action="Delete" asp-route-vehicleId="@vehicle.VehicleId">Delete</a></td>
+*@                  <td><a asp-controller="Vehicle" asp-action="GetUpdate" asp-route-vehicleId="@vehicle.VehicleId">Update</a></td>
                   <td><a asp-controller="Vehicle" asp-action="Detail" asp-route-vehicleId="@vehicle.VehicleId">Detail</a></td>
                 </tr>
             }
@@ -67,3 +68,20 @@
         <a asp-controller="Vehicle" asp-action="GetCreate">Create New Vehicle</a>
     </p>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function buttonHandler(id) {
+            $.ajax({
+                url: '@Url.Action("Delete", "Vehicle")',
+		        type: 'DELETE',
+                data: { vehicleId: id },
+                success: function (xml) {
+                    location.reload(true);
+                }
+                });
+            }
+
+    </script>
+} 

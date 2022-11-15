@@ -20,7 +20,7 @@
                 <tr class="table-active">
                   <td>@vehicleType.Name</td>
                   <td>@vehicleType.TaxCoefficient</td>
-                  <td><button value="@vehicleType.VehicleTypeId" onclick="buttonHandler(@vehicleType.VehicleTypeId)" id="btnDelete" class="btn btn-danger">Delete</button></td>
+                  <td><button onclick="buttonHandler(@vehicleType.VehicleTypeId)" id="btnDelete" class="btn btn-danger">Delete</button></td>
                   <td><a href="~/VehicleType/GetUpdate/?vehicleTypeId=@vehicleType.VehicleTypeId">Update</a></td>
                 </tr>
             }
