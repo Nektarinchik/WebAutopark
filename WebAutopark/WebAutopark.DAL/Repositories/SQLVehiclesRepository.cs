@@ -60,29 +60,5 @@ namespace WebAutopark.DAL.Repositories
                 await db.ExecuteAsync(sqlQuery, item);
             }
         }
-        public async Task<IEnumerable<Vehicles>> GetSortedByModel()
-        {
-            using (IDbConnection db = new SqlConnection(_connectionString))
-            {
-                return await db.QueryAsync<Vehicles>("SELECT * FROM Vehicles ORDER BY Model");
-            }
-        }
-        public async Task<IEnumerable<Vehicles>> GetSortedByMileage()
-        {
-            using (IDbConnection db = new SqlConnection(_connectionString))
-            {
-                return await db.QueryAsync<Vehicles>("SELECT * FROM Vehicles ORDER BY Mileage");
-            }
-        }
-        public async Task<IEnumerable<Vehicles>> GetSortedByVehicleType()
-        {
-            using (IDbConnection db = new SqlConnection(_connectionString))
-            {
-                return await db.QueryAsync<Vehicles>(@"SELECT * FROM Vehicles AS v
-                    INNER JOIN VehicleTypes AS vt
-                    ON v.VehicleTypeId = vt.VehicleTypeId
-                    ORDER BY vt.Name");
-            }
-        }
     }
 }

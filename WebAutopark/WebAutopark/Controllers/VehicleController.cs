@@ -24,22 +24,24 @@ namespace WebAutopark.Controllers
                 Vehicles = await _vehiclesRepository.GetAll() 
             };
 
-            if (_vehiclesRepository is SQLVehiclesRepository vehicles)
+            switch (state)
             {
-                switch (state)
-                {
-                    case SortState.MODEL:
-                        ivm.Vehicles = await vehicles.GetSortedByModel();
-                        break;
-                    case SortState.VEHICLETYPE:
-                        ivm.Vehicles = await vehicles.GetSortedByVehicleType();
-                        break;
-                    case SortState.MILEAGE:
-                        ivm.Vehicles = await vehicles.GetSortedByMileage();
-                        break;
-                    default:
-                        break;
-                }
+                case SortState.MODEL:
+                    ivm.Vehicles = ivm.Vehicles.OrderBy(v => v.Model);
+                    break;
+                case SortState.VEHICLETYPE:
+                    ivm.Vehicles = ivm.Vehicles.Join(ivm.VehicleTypes,
+                        v => v.VehicleTypeId,
+                        vt => vt.VehicleTypeId,
+                        (v, vt) => new { Vehicle = v, VehicleType = vt })
+                        .OrderBy(vvt => vvt.VehicleType.Name)
+                        .Select(vvt => vvt.Vehicle);
+                    break;
+                case SortState.MILEAGE:
+                    ivm.Vehicles = ivm.Vehicles.OrderBy(v => v.Mileage);
+                    break;
+                default:
+                    break;
             }
             
             return View(ivm);
